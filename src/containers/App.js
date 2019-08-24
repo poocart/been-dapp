@@ -1,9 +1,10 @@
 import React from 'react';
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
+import { Provider } from 'react-redux';
 
 import LoggedIn from './LoggedIn';
 import Home from './Home';
-import Agenda from './Agenda';
+import AgendaScreen from './Agenda';
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,6 +14,8 @@ import {
 import Profile from './Profile';
 
 import { Storage, STORAGE_KEYS } from '../services/storage';
+import configureStore from '../configureStore';
+const store = configureStore();
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Karla&display=swap');
@@ -49,15 +52,17 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 export default class App extends React.Component {
   render() {
     return (
-      <Router>
-        <GlobalStyle />
-        <Switch>
-          <PrivateRoute exact path='/' component={LoggedIn} />
-          <PrivateRoute exact path='/profile' component={Profile} />
-          <PrivateRoute exact path='/agenda' component={Agenda} />
-          <Route path="/:pk" component={Home} />
-        </Switch>
-      </Router>
+      <Provider store={store}>
+        <Router>
+          <GlobalStyle />
+          <Switch>
+            <PrivateRoute exact path='/' component={LoggedIn} />
+            <PrivateRoute exact path='/profile' component={Profile} />
+            <PrivateRoute exact path='/agenda' component={AgendaScreen} />
+            <Route path="/:pk" component={Home} />
+          </Switch>
+        </Router>
+      </Provider>
     )
   }
 }
