@@ -7,12 +7,14 @@ import {
   Redirect,
   withRouter
 } from 'react-router-dom';
-import { Storage, STORAGE_KEYS } from "../services/storage";
+import Profile from './Profile';
+import { Storage, STORAGE_KEYS } from '../services/storage';
 
 const AuthButton = withRouter(({ history }) => {
   const existingPk = Storage.get(STORAGE_KEYS.PRIVATE_KEY);
+  if (!existingPk) return <p>Not logged in</p>;
   return (
-    !!existingPk ? (
+    <div>
       <button onClick={() => {
         history.push('/');
         Storage.reset();
@@ -20,11 +22,11 @@ const AuthButton = withRouter(({ history }) => {
       >
         Sign out
       </button>
-    ) : (
-      <p>Not logged in</p>
-    )
-  )
+      <a href="/profile">My Profile</a>
+    </div>
+  );
 });
+
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => {
     return (
@@ -48,6 +50,7 @@ export default class App extends React.Component {
             {/*<li><Link to="/">Home Page</Link></li>*/}
           {/*</ul>*/}
           <PrivateRoute exact path='/loggedIn' component={LoggedIn} />
+          <PrivateRoute exact path='/profile' component={Profile} />
           <Route exact path="/:pk" component={Home} />
           <Route exact path="/" component={Home} />
         </div>

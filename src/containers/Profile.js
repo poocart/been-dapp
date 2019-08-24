@@ -8,6 +8,14 @@ type State = {
   profile: Profile,
 }
 
+const ProfileInput = (name, key, value, type? = 'text') => (
+  <div>
+    <label htmlFor={key}>
+      {name}: <input id={key} type={type} value={value}/>
+    </label>
+  </div>
+)
+
 class ProfileContainer extends React.Component<*, State> {
   constructor(props){
     super(props);
@@ -21,7 +29,10 @@ class ProfileContainer extends React.Component<*, State> {
     const { profile } = this.state;
     return (
       <div>
-        {JSON.stringify(profile)}
+        {ProfileInput('First name', 'first-name', profile.firstName)}
+        {ProfileInput('Last name', 'last-name', profile.lastName)}
+        {ProfileInput('Email', 'email', profile.email)}
+        {ProfileInput('Telegram', 'telegram', profile.telegram)}
       </div>
     )
   }

@@ -19,6 +19,12 @@ export default class LoggedIn extends React.Component<*, State> {
     };
   }
 
+  componentDidMount() {
+    ApiService
+      .get(ENDPOINTS.GET_QUIZZES, { pubkey: '0x1' })
+      .then(quizzes => this.setState({ quizzes }));
+  }
+
   onPayWithDataClick = async () => {
     const { profile } = this.state;
     if (!Object.keys(profile).length) return;
@@ -29,12 +35,6 @@ export default class LoggedIn extends React.Component<*, State> {
   onReceiveContactClick = () => {
 
   };
-
-  componentDidMount() {
-    ApiService
-      .get(ENDPOINTS.GET_QUIZZES)
-      .then(quizzes => this.setState({ quizzes }));
-  }
 
   render() {
     const { quizzes, qrCode } = this.state;
