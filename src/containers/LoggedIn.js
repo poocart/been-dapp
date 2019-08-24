@@ -160,6 +160,20 @@ type State = {
   scanResult: Object,
 };
 
+const mapFields = (fields = []) => {
+  return fields
+    .map(field => {
+      switch (field){
+        case 'firstName': return 'first name';
+        case 'lastName': return 'last name';
+        case 'telegram': return 'telegram';
+        case 'email': return 'email';
+        case 'phone': return 'phone';
+        case 'twitter': return 'twitter';
+        case 'company': return 'company';
+      }
+    })
+};
 
 export default class LoggedIn extends React.Component<*, State> {;
 
@@ -358,7 +372,8 @@ export default class LoggedIn extends React.Component<*, State> {;
           <ConfirmButton onClick={() => this.handlePayWithPointsConfirm(scanResult.amount, scanResult.address)}>Confirm</ConfirmButton>
         </Modal>
         <Modal open={!!payWithDataModalVisible} onClose={() => this.setState({ payWithDataModalVisible: false })} center>
-          <p>pay with data</p>
+          <Description style={{ marginTop: 35 }}>Requested fields: <strong>{mapFields(scanResult.fields).map(field => <span><br/>{`- ${field}`}</span>)}</strong></Description>
+          <ConfirmButton onClick={() => this.handlePayWithDataConfirm(scanResult.fields)}>Confirm</ConfirmButton>
         </Modal>
       </Container>
     )
