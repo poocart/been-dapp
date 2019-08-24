@@ -1,38 +1,60 @@
 import React from 'react';
-import Quiz from '../components/Quiz';
-import { ApiService, ENDPOINTS } from '../services/api';
+import LoggedIn from './LoggedIn';
+import Home from './Home';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from 'react-router-dom';
 
-import type { Quiz as QuizModel } from '../models/Quiz';
+const PK = 'pk';
 
-type State = {
-  quizzes?: QuizModel[],
-}
+const AuthButton = withRouter(({ history }) => {
+  const existingPk = localStorage.getItem(PK);
+  return (
+    !!existingPk ? (
+      <button onClick={() => {
+        history.push('/');
+        localStorage.clear();
+      }}
+      >
+        Sign out
+      </button>
+    ) : (
+      <p>Not logged in</p>
+    )
+  )
+});
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => {
+    const hasPkAdded = !!localStorage.getItem(PK);
+    return (
+      hasPkAdded
+        ? <Component {...props} />
+        : <Redirect to={{
+          pathname: '/',
+          state: { from: props.location }
+        }} />
+    )
+  }} />
+);
 
 export default class App extends React.Component {
-  state = {};
-
-  componentDidMount() {
-    ApiService
-      .get(ENDPOINTS.GET_QUIZZES)
-      .then(quizzes => this.setState({ quizzes }))
-  }
-
   render() {
-    const { quizzes = [] } = this.state;
     return (
-      <div>
-        {quizzes.map(({ name, questions }, index) => {
-          const quizId = `quiz-${index}`;
-          return (
-            <Quiz
-              name={name}
-              quizId={quizId}
-              questions={questions}
-              key={quizId}
-            />
-          );
-        })}
-      </div>
+      <Router>
+        <div>
+          <AuthButton/>
+          <ul>
+            <li><Link to="/">Home Page</Link></li>
+          </ul>
+          <Route exact path="/:pk" component={Home} />
+          <Route exact path="/" component={Home} />
+          <PrivateRoute path='/loggedIn' component={LoggedIn} />
+        </div>
+      </Router>
     )
   }
 }
