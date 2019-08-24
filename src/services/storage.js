@@ -15,7 +15,7 @@ class StorageService {
   }
 
   isStored(key: string) {
-    return !!localStorage(key);
+    return !!localStorage.getItem(key);
   }
 
   delete(key: string) {
