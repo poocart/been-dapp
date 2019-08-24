@@ -1,0 +1,16 @@
+[
+  {
+    "name": "Company Quiz",
+    "questions": [
+      {
+        "question": "Is this a  question, really?",
+        "answers": [
+          "Answer 1",
+          "no",
+          "123 456 789 10 answer",
+          "Answeransweransweranswer"
+        ]
+      }
+    ]
+  }
+]

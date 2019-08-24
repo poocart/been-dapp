@@ -1,26 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Quiz from '../components/Quiz';
+import { ApiService, ENDPOINTS } from '../services/api';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import type { Quiz as QuizModel } from '../models/Quiz';
+
+type State = {
+  quizzes?: QuizModel[],
 }
 
-export default App;
+export default class App extends React.Component {
+  state = {};
+
+  componentDidMount() {
+    ApiService
+      .get(ENDPOINTS.GET_QUIZZES)
+      .then(quizzes => this.setState({ quizzes }))
+  }
+
+  render() {
+    const { quizzes = [] } = this.state;
+    return (
+      <div>
+        {quizzes.map(({ name, questions }) => (
+          <Quiz
+            name={name}
+            questions={questions}
+          />
+        ))}
+      </div>
+    )
+  }
+}
