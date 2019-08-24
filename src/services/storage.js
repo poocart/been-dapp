@@ -2,6 +2,7 @@
 
 export const STORAGE_KEYS = {
   PRIVATE_KEY: 'pk',
+  PUBLIC_KEY: 'publicKey',
   PROFILE: 'profile',
 };
 

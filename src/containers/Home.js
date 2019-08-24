@@ -1,17 +1,25 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import get from 'lodash.get';
 import Modal from 'react-responsive-modal';
 import { ethers } from 'ethers';
+import { Redirect } from 'react-router-dom';
 import { Storage, STORAGE_KEYS } from '../services/storage';
+import smartWalletService from '../services/smartWallet';
 
 type State = {
   redirectToReferrer: boolean,
   checkRewriteModalOpen: boolean,
 };
 
-const checkIfValidPK = (pk) => {
+let smartAccount;
+const checkIfValidPK = async (pk) => {
   try {
     new ethers.Wallet(pk);
+    await smartWalletService.init(pk);
+    const accounts = await smartWalletService.getAccounts();
+    if (!accounts.length || !get(accounts, '[0].address')) return false;
+    smartAccount = accounts[0];
+    await smartWalletService.connectAccount(smartAccount.address);
     return true;
   }
   catch(error) {
@@ -25,22 +33,27 @@ export default class Home extends React.Component<*, State> {
     checkRewriteModalOpen: false,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { match } = this.props;
     const pk = match.params.pk;
-    const isValidPK = checkIfValidPK(pk);
+    const isValidPK = await checkIfValidPK(pk);
 
     if (!isValidPK) return;
 
     const existingPk = Storage.get(STORAGE_KEYS.PRIVATE_KEY, '');
+    const existingPublicKey = Storage.get(STORAGE_KEYS.PUBLIC_KEY, '');
     if (pk && isValidPK) {
       if (!existingPk) {
         Storage.set(STORAGE_KEYS.PRIVATE_KEY, pk);
+        Storage.set(STORAGE_KEYS.PUBLIC_KEY, smartAccount.address);
         this.login();
       } else {
         if (existingPk !== pk && pk !== 'loggedIn') {
           this.toggleCheckModal(true);
         } else {
+          if (!existingPublicKey) {
+            Storage.set(STORAGE_KEYS.PUBLIC_KEY, smartAccount.address);
+          }
           this.setState({ redirectToReferrer: true });
         }
       }

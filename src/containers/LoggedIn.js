@@ -21,13 +21,14 @@ export default class LoggedIn extends React.Component<*, State> {
   }
 
   componentDidMount() {
+    const publicKey = Storage.get(STORAGE_KEYS.PUBLIC_KEY, '');
     ApiService
-      .get(ENDPOINTS.GET_QUIZZES, { pubkey: '0x1' })
-      .then(quizzes => this.setState({ quizzes }));
+      .get(ENDPOINTS.GET_QUIZZES, { pubkey: publicKey })
+      .then(quizzes => this.setState({ quizzes: quizzes || [] }));
   }
 
   onScannerClick = () => {
-    
+
   };
 
   onShareDetails = async () => {

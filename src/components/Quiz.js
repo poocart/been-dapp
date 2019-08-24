@@ -3,6 +3,7 @@ import React from 'react';
 
 import type { Questions } from '../models/Quiz';
 import { ApiService, ENDPOINTS } from "../services/api";
+import { Storage, STORAGE_KEYS } from '../services/storage';
 
 type Prop = {
   name: string,
@@ -22,9 +23,10 @@ class Quiz extends React.Component<Prop, State> {
     const { answers } = this.state;
     if (!answers) return;
     const sequence = Object.values(answers).join('');
+    const publicKey = Storage.get(STORAGE_KEYS.PUBLIC_KEY, '');
     ApiService
       .submit(ENDPOINTS.SUBMIT_QUIZ, {
-        pubkey: "0x1",
+        pubkey: publicKey,
         name,
         sequence
       });

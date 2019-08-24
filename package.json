@@ -3,7 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@archanova/contracts": "^1.0.0",
+    "@archanova/sdk": "^1.1.2",
+    "@netgum/utils": "^0.1.3",
+    "bignumber.js": "^9.0.0",
     "ethers": "^4.0.36",
+    "lodash.get": "^4.4.2",
     "qrcode": "^1.4.1",
     "qrcode-reader": "^1.0.4",
     "react": "^16.9.0",
