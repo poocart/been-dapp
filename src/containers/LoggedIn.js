@@ -1,10 +1,10 @@
 import React from 'react';
-import QRCodeGenerator from 'qrcode';
 import { Agenda } from '../components/Agenda';
 import { ApiService, ENDPOINTS } from '../services/api';
 import { Storage, STORAGE_KEYS } from "../services/storage";
 import Modal from "react-responsive-modal";
 import HeaderBlock from "../components/HeaderBlock";
+import PayModal from "../components/PayModal";
 
 export default class LoggedIn extends React.Component<*, State> {
   constructor(props){
@@ -45,6 +45,7 @@ export default class LoggedIn extends React.Component<*, State> {
         <Modal open={!!qrCode} onClose={() => this.setState({ qrCode: null })} center>
           <img src={qrCode} />
         </Modal>
+        <PayModal />
       </div>
     )
   }
