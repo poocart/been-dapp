@@ -49,6 +49,8 @@ const PayButton = styled.a`
 type Prop = {
   visible: boolean,
   onDismiss: Function,
+  onPayWithData: Function,
+  onPayWithPoints: Function,
   hidePayWithData?: boolean,
   hidePayWithBeans?: boolean,
 };
@@ -68,6 +70,8 @@ class PayModal extends React.Component<Prop, State> {
       hidePayWithData,
       hidePayWithBeans,
       onDismiss,
+      onPayWithPoints,
+      onPayWithData,
     } = this.props;
     const { hidden } = this.state;
     if (!visible && !hidden) return null;
@@ -75,8 +79,8 @@ class PayModal extends React.Component<Prop, State> {
       <Modal>
         <BackgroundImage src={bigBeansImage} />
         <ButtonsWrapper>
-          {!hidePayWithBeans && <PayButton>Pay with BEEN's</PayButton>}
-          {!hidePayWithData && <PayButton>Pay with your data</PayButton>}
+          {!hidePayWithBeans && <PayButton onClick={onPayWithPoints}>Pay with BEEN's</PayButton>}
+          {!hidePayWithData && <PayButton onClick={onPayWithData}>Pay with your data</PayButton>}
           <CancelButton onClick={onDismiss}>Cancel</CancelButton>
         </ButtonsWrapper>
       </Modal>

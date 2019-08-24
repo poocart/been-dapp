@@ -8,6 +8,7 @@ import HeaderBlock from "../components/HeaderBlock";
 import PayModal from "../components/PayModal";
 
 import scanIcon from '../assets/images/scan.svg';
+import Modal from "react-responsive-modal";
 
 const Container = styled.div`
   min-height: calc(100vh - 40px);
@@ -131,13 +132,34 @@ const Line = styled.div`
   transform: rotate(-45deg);
 `;
 
+const Description = styled.p`
+  font-size: 25px;
+  word-break: break-all;
+  margin-top: 5px;
+`;
+
+const ConfirmButton = styled.button`
+  margin-top: 35px;
+  text-align: center;
+  background: #0ad604;
+  width: 100%;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 15px 0px;
+  border: 4px solid #000;
+`;
+
 type State = {
   agenda: [],
   cameraActive: boolean,
   payModalVisible: boolean,
   hidePayWithData: boolean,
   hidePayWithBeans: boolean,
-}
+  payWithPointsModalVisible: boolean,
+  payWithDataModalVisible: boolean,
+  scanResult: Object,
+};
+
 
 export default class LoggedIn extends React.Component<*, State> {;
 
@@ -149,6 +171,9 @@ export default class LoggedIn extends React.Component<*, State> {;
       payModalVisible: false,
       hidePayWithData: false,
       hidePayWithBeans: false,
+      payWithPointsModalVisible: false,
+      payWithDataModalVisible: false,
+      scanResult: {},
     };
   }
 
@@ -177,17 +202,20 @@ export default class LoggedIn extends React.Component<*, State> {;
           this.setState({
             payModalVisible: true,
             hidePayWithData: true,
+            scanResult: result,
           });
           break;
         case 'data':
           this.setState({
             payModalVisible: true,
             hidePayWithBeans: true,
+            scanResult: result,
           });
           break;
         case 'both':
           this.setState({
             payModalVisible: true,
+            scanResult: result,
           });
           break;
         default:
@@ -209,6 +237,36 @@ export default class LoggedIn extends React.Component<*, State> {;
     });
   };
 
+  onPayWithData = () => {
+    this.setState({
+      payModalVisible: false,
+      hidePayWithBeans: false,
+      hidePayWithData: false,
+      payWithDataModalVisible: true,
+    });
+  };
+
+  onPayWithPoints = () => {
+    this.setState({
+      payModalVisible: false,
+      hidePayWithBeans: false,
+      hidePayWithData: false,
+      payWithPointsModalVisible: true,
+    });
+  };
+
+  handlePayWithPointsConfirm = () => {
+    this.setState({
+      payWithPointsModalVisible: false,
+    });
+  };
+
+  handlePayWithDataConfirm = () => {
+    this.setState({
+      payWithDataModalVisible: false,
+    });
+  };
+
   render() {
     const {
       agenda,
@@ -216,6 +274,9 @@ export default class LoggedIn extends React.Component<*, State> {;
       payModalVisible,
       hidePayWithBeans,
       hidePayWithData,
+      payWithPointsModalVisible,
+      payWithDataModalVisible,
+      scanResult,
     } = this.state;
     return (
       <Container>
@@ -287,8 +348,18 @@ export default class LoggedIn extends React.Component<*, State> {;
           visible={payModalVisible}
           hidePayWithBeans={hidePayWithBeans}
           hidePayWithData={hidePayWithData}
+          onPayWithPoints={this.onPayWithPoints}
+          onPayWithData={this.onPayWithData}
           onDismiss={this.handlePayModalClose}
         />
+        <Modal open={!!payWithPointsModalVisible} onClose={() => this.setState({ payWithPointsModalVisible: false })} center>
+          <Description style={{ marginTop: 35 }}>Amount: <strong>{parseFloat(scanResult.amount || 0).toFixed(2)} BEEN's</strong></Description>
+          <Description>Receiver: <strong>{scanResult.address}</strong></Description>
+          <ConfirmButton onClick={() => this.handlePayWithPointsConfirm(scanResult.amount, scanResult.address)}>Confirm</ConfirmButton>
+        </Modal>
+        <Modal open={!!payWithDataModalVisible} onClose={() => this.setState({ payWithDataModalVisible: false })} center>
+          <p>pay with data</p>
+        </Modal>
       </Container>
     )
   }
