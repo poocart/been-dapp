@@ -1,6 +1,5 @@
 import React from 'react';
 import { Storage, STORAGE_KEYS } from '../services/storage';
-import { ApiService, ENDPOINTS } from '../services/api';
 import HeaderBlock from '../components/HeaderBlock';
 import { Agenda } from '../components/Agenda';
 

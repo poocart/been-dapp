@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import QRScanner from 'react-qr-reader'
 import { Agenda } from '../components/Agenda';
 import { ApiService, ENDPOINTS } from '../services/api';
 import { Storage, STORAGE_KEYS } from "../services/storage";
@@ -33,13 +34,37 @@ const ScannerButton = styled.button`
   font-size: 0;
 `;
 
-export default class LoggedIn extends React.Component<*, State> {
+const CameraCloseButtonWrapper = styled.div`
+  position: fixed;
+  bottom: 50px;
+  left: 0px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+const CameraCloseButton = styled.button`
+  border: none;
+  padding: 25px;
+  color: #ff7f00;
+  background: none;
+  font-size: 18px;
+  font-weight: 700;
+`;
+
+type State = {
+  agenda: [],
+  cameraActive: boolean,
+}
+
+export default class LoggedIn extends React.Component<*, State> {;
+
   constructor(props){
     super(props);
-    const profileData = Storage.get(STORAGE_KEYS.PROFILE, {});
     this.state = {
-      profile: profileData,
       agenda: [],
+      cameraActive: false,
+      cameraRef: null,
     };
   }
 
@@ -58,12 +83,18 @@ export default class LoggedIn extends React.Component<*, State> {
       .catch(() => {})
   }
 
-  onScannerClick = () => {
+  handleCameraScan = (result) => {
+    if (!result) return;
+    this.setState({ cameraActive: false });
+    console.log('result: ', result);
+  };
 
+  handleCameraClose = (err?) => {
+    this.setState({ cameraActive: false });
   };
 
   render() {
-    const { agenda } = this.state;
+    const { agenda, cameraActive } = this.state;
     return (
       <Container>
         <ContentWrapper>
@@ -72,10 +103,34 @@ export default class LoggedIn extends React.Component<*, State> {
           <Agenda agenda={agenda} showMore />
         </ContentWrapper>
         <FooterWrapper>
-          <ScannerButton onPress={() =>{}}>
+          <ScannerButton onClick={() => this.setState({ cameraActive: true })}>
             <img src={scanIcon} />
           </ScannerButton>
         </FooterWrapper>
+        {cameraActive &&
+          <div>
+            <QRScanner
+              onError={this.handleCameraClose}
+              onScan={this.handleCameraScan}
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: '#000'
+              }}
+            />
+            <CameraCloseButtonWrapper>
+              <CameraCloseButton onClick={this.handleCameraClose}>
+                Close
+              </CameraCloseButton>
+            </CameraCloseButtonWrapper>
+          </div>
+        }
         <PayModal />
       </Container>
     )
