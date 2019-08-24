@@ -4,20 +4,18 @@ import Home from './Home';
 import {
   BrowserRouter as Router,
   Route,
-  Link,
   Redirect,
   withRouter
 } from 'react-router-dom';
-
-const PK = 'pk';
+import { Storage, STORAGE_KEYS } from "../services/storage";
 
 const AuthButton = withRouter(({ history }) => {
-  const existingPk = localStorage.getItem(PK);
+  const existingPk = Storage.get(STORAGE_KEYS.PRIVATE_KEY);
   return (
     !!existingPk ? (
       <button onClick={() => {
         history.push('/');
-        localStorage.clear();
+        Storage.reset();
       }}
       >
         Sign out
@@ -29,9 +27,8 @@ const AuthButton = withRouter(({ history }) => {
 });
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => {
-    const hasPkAdded = !!localStorage.getItem(PK);
     return (
-      hasPkAdded
+      Storage.isStored(STORAGE_KEYS.PRIVATE_KEY)
         ? <Component {...props} />
         : <Redirect to={{
           pathname: '/',
