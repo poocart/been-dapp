@@ -43,8 +43,9 @@ const ProfileInput = styled.input`
   font-size: 16px;
 `;
 
-const QRCodeImage = styled.img`
+const QRCodeImageWrapper = styled.div`
   margin-top: 15px;
+  text-align: center;
 `;
 
 const BlackButton = styled.button`
@@ -137,7 +138,11 @@ class ProfileContainer extends React.Component<*, State> {
       <div>
         <HeaderBlock showExitButton />
         <ProfileWrapper>
-          {!!qrCode && <QRCodeImage src={qrCode} />}
+          {!!qrCode &&
+            <QRCodeImageWrapper>
+              <img src={qrCode} />
+            </QRCodeImageWrapper>
+          }
           <ProfileSettings>
             {this.renderProfileSetting('First name', 'firstName')}
             {this.renderProfileSetting('Last name', 'lastName')}
