@@ -10,7 +10,6 @@ const AgendaItemWrapper = styled.a`
   margin-bottom: -1px;
   text-decoration: none;
   display: block;
-  
 `;
 
 const InnerWrapper = styled.div`
@@ -71,16 +70,16 @@ const Wrapper = styled.div`
   text-align: center;
 `;
 
-export const Agenda = ({ agenda, showMore }) => {
+export const Agenda = ({ agenda, showMore, style }) => {
   return (
-    <Wrapper>
+    <Wrapper style={style}>
       <AgendaWrapper>
         {agenda.map((event) => {
           return (
             <AgendaItemWrapper key={event.id} href='/'>
               <InnerWrapper>
                 <InfoColumn>
-                  <SmallText>{event.time}</SmallText>
+                  <SmallText>{event.timeFrom}</SmallText>-<SmallText>{event.timeTo}</SmallText>
                   <SmallText>{event.area}</SmallText>
                 </InfoColumn>
                 <TitleWrapper>
