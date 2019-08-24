@@ -1,11 +1,13 @@
 [
   {
+    "id": "1",
     "time": "09:00",
     "title": "Event title",
     "speaker": "John Doe",
     "area": "2nd Floor"
   },
   {
+    "id": "2",
     "time": "10:00",
     "title": "Event title 2",
     "speaker": "John Doey",

@@ -85,7 +85,6 @@ export default class Home extends React.Component<*, State> {
             Burn this and add new
           </button>
         </Modal>
-        <p>Content for not logged user</p>
       </div>
     )
   }

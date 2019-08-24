@@ -16,15 +16,28 @@ class Agenda extends React.Component<*, State> {
   componentDidMount() {
     if (!Storage.isStored(STORAGE_KEYS.PRIVATE_KEY)) this.props.history.push('/');
 
-    ApiService
-      .get(ENDPOINTS.GET_AGENDA)
-      .then(agenda => this.setState({ agenda }));
+    fetch('http://www.mocky.io/v2/5d6146c232000063008e6084')
+      .then(response => response.json())
+      .then(json => {
+        this.setState({ agenda: json })
+      })
+      .catch(() => {})
   }
 
   render() {
+    const { agenda } = this.state;
     return (
       <div>
         <p>Agenda</p>
+        {agenda.map((event) => {
+          return (
+            <div key={event.id}>
+              <p>{event.time}</p>
+              <p>{event.title}</p>
+              <p>{event.area}</p>
+            </div>
+          )
+        })}
       </div>
     )
   }

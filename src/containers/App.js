@@ -11,6 +11,8 @@ import {
   withRouter
 } from 'react-router-dom';
 import Profile from './Profile';
+import { HeaderBlock } from '../components/HeaderBlock';
+
 import { Storage, STORAGE_KEYS } from '../services/storage';
 
 const GlobalStyle = createGlobalStyle`
@@ -28,27 +30,9 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: #f9f9f9;
     font-family: Karla;
-    padding: 0px 20px;
+    padding: 20px;
   }
 `;
-
-
-const AuthButton = withRouter(({ history }) => {
-  const existingPk = Storage.get(STORAGE_KEYS.PRIVATE_KEY);
-  if (!existingPk) return <p>Not logged in</p>;
-  return (
-    <div>
-      <button onClick={() => {
-        history.push('/');
-        Storage.reset();
-      }}
-      >
-        Sign out
-      </button>
-      <a href="/profile">My Profile</a>
-    </div>
-  );
-});
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route exact {...rest} render={(props) => {
@@ -69,12 +53,11 @@ export default class App extends React.Component {
       <Router>
         <GlobalStyle />
         <div>
-          <AuthButton/>
+          <HeaderBlock/>
           <PrivateRoute path='/' component={LoggedIn} />
-          <PrivateRoute exact path='/loggedIn' component={LoggedIn} />
           <PrivateRoute exact path='/profile' component={Profile} />
+          <PrivateRoute exact path='/agenda' component={Agenda} />
           <Route exact path="/:pk" component={Home} />
-          <Route exact path="/agenda" component={Agenda} />
         </div>
       </Router>
     )
