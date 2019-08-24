@@ -2,14 +2,15 @@ import React from 'react';
 import styled from 'styled-components';
 
 const AgendaWrapper = styled.div`
-  padding: 10px 0;
   border: 2px solid #000000;
 `;
 
 const AgendaItemWrapper = styled.a`
-  padding: 6px 14px;
+  padding: 12px 14px 0 14px;
+  margin-bottom: -1px;
   text-decoration: none;
   display: block;
+  
 `;
 
 const InnerWrapper = styled.div`
@@ -18,6 +19,8 @@ const InnerWrapper = styled.div`
   display: flex;
   text-decoration: none;
   align-items: center;
+  border-bottom: 1px solid #000;
+  padding-bottom: 10px;
 `;
 
 const InfoColumn = styled.div`
