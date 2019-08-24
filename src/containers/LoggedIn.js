@@ -134,6 +134,9 @@ const Line = styled.div`
 type State = {
   agenda: [],
   cameraActive: boolean,
+  payModalVisible: boolean,
+  hidePayWithData: boolean,
+  hidePayWithBeans: boolean,
 }
 
 export default class LoggedIn extends React.Component<*, State> {;
@@ -143,7 +146,9 @@ export default class LoggedIn extends React.Component<*, State> {;
     this.state = {
       agenda: [],
       cameraActive: false,
-      cameraRef: null,
+      payModalVisible: false,
+      hidePayWithData: false,
+      hidePayWithBeans: false,
     };
   }
 
@@ -167,7 +172,26 @@ export default class LoggedIn extends React.Component<*, State> {;
     this.setState({ cameraActive: false });
     try {
       const result = JSON.parse(rawResult) || {};
-      console.log('result: ', result);
+      switch (result.type) {
+        case 'points':
+          this.setState({
+            payModalVisible: true,
+            hidePayWithData: true,
+          });
+          break;
+        case 'data':
+          this.setState({
+            payModalVisible: true,
+            hidePayWithBeans: true,
+          });
+          break;
+        case 'both':
+          this.setState({
+            payModalVisible: true,
+          });
+          break;
+        default:
+      }
     } catch {
       // no result
     }
@@ -177,8 +201,22 @@ export default class LoggedIn extends React.Component<*, State> {;
     this.setState({ cameraActive: false });
   };
 
+  handlePayModalClose = () => {
+    this.setState({
+      payModalVisible: false,
+      hidePayWithBeans: false,
+      hidePayWithData: false,
+    });
+  };
+
   render() {
-    const { agenda, cameraActive } = this.state;
+    const {
+      agenda,
+      cameraActive,
+      payModalVisible,
+      hidePayWithBeans,
+      hidePayWithData,
+    } = this.state;
     return (
       <Container>
         <ContentWrapper>
@@ -245,7 +283,12 @@ export default class LoggedIn extends React.Component<*, State> {;
             </CameraCloseButtonWrapper>
           </div>
         }
-        <PayModal />
+        <PayModal
+          visible={payModalVisible}
+          hidePayWithBeans={hidePayWithBeans}
+          hidePayWithData={hidePayWithData}
+          onDismiss={this.handlePayModalClose}
+        />
       </Container>
     )
   }

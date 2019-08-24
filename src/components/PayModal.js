@@ -7,7 +7,7 @@ import bigBeansImage from '../assets/images/big_beans.svg';
 const Modal = styled.div`
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0px;
   left: 0px;
   background: #000;
@@ -75,8 +75,8 @@ class PayModal extends React.Component<Prop, State> {
       <Modal>
         <BackgroundImage src={bigBeansImage} />
         <ButtonsWrapper>
-          {!hidePayWithBeans && <PayButton>Pay with beans</PayButton>}
-          {!hidePayWithData && <PayButton>Pay with data</PayButton>}
+          {!hidePayWithBeans && <PayButton>Pay with BEEN's</PayButton>}
+          {!hidePayWithData && <PayButton>Pay with your data</PayButton>}
           <CancelButton onClick={onDismiss}>Cancel</CancelButton>
         </ButtonsWrapper>
       </Modal>
