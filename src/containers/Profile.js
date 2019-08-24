@@ -5,6 +5,7 @@ import { Storage, STORAGE_KEYS } from '../services/storage';
 
 import type { Profile } from '../models/Profile';
 import QRCodeGenerator from "qrcode";
+import HeaderBlock from "../components/HeaderBlock";
 
 const ProfileWrapper = styled.div`
   margin-top: 15px;
@@ -133,17 +134,20 @@ class ProfileContainer extends React.Component<*, State> {
   render() {
     const { qrCode } = this.state;
     return (
-      <ProfileWrapper>
-        {!!qrCode && <QRCodeImage src={qrCode} />}
-        <ProfileSettings>
-          {this.renderProfileSetting('First name', 'firstName')}
-          {this.renderProfileSetting('Last name', 'lastName')}
-          {this.renderProfileSetting('Email', 'email')}
-          {this.renderProfileSetting('Telegram', 'telegram')}
-        </ProfileSettings>
-        <BlackButton disabled>Transfer badges</BlackButton>
-        <SmallText>Save badges in your main wallet</SmallText>
-      </ProfileWrapper>
+      <div>
+        <HeaderBlock />
+        <ProfileWrapper>
+          {!!qrCode && <QRCodeImage src={qrCode} />}
+          <ProfileSettings>
+            {this.renderProfileSetting('First name', 'firstName')}
+            {this.renderProfileSetting('Last name', 'lastName')}
+            {this.renderProfileSetting('Email', 'email')}
+            {this.renderProfileSetting('Telegram', 'telegram')}
+          </ProfileSettings>
+          <BlackButton disabled>Transfer badges</BlackButton>
+          <SmallText>Save badges in your main wallet</SmallText>
+        </ProfileWrapper>
+      </div>
     )
   }
 }

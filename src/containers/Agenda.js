@@ -2,6 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Storage, STORAGE_KEYS } from '../services/storage';
 import { ApiService, ENDPOINTS } from '../services/api';
+import HeaderBlock from "../components/HeaderBlock";
 
 type State = {
   redirectToReferrer: boolean,
@@ -28,6 +29,7 @@ class Agenda extends React.Component<*, State> {
     const { agenda } = this.state;
     return (
       <div>
+        <HeaderBlock />
         <p>Agenda</p>
         {agenda.map((event) => {
           return (

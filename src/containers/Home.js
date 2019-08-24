@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 import { Redirect } from 'react-router-dom';
 import { Storage, STORAGE_KEYS } from '../services/storage';
 import smartWalletService from '../services/smartWallet';
+import HeaderBlock from "../components/HeaderBlock";
 
 type State = {
   redirectToReferrer: boolean,
@@ -89,6 +90,7 @@ export default class Home extends React.Component<*, State> {
 
     return (
       <div>
+        <HeaderBlock />
         <Modal open={!!checkRewriteModalOpen} onClose={() => this.toggleCheckModal(false)} center>
           <p>You already have a burner wallet added</p>
           <button onClick={() => this.toggleCheckModal(false)}>

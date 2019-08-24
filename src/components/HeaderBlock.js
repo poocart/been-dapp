@@ -1,10 +1,12 @@
+// @flow
 import React from 'react';
 import styled from 'styled-components';
-import { withRouter } from 'react-router-dom';
+
 import { Storage, STORAGE_KEYS } from '../services/storage';
 
 import myProfileIcon from '../assets/images/profile.svg';
 import beansImage from '../assets/images/beens.svg';
+import closeIcon from '../assets/images/close.svg';
 
 const HeaderWrapper = styled.div`
   padding: 10px 14px;
@@ -36,29 +38,34 @@ const BeansImage = styled.img`
   height: 100%;
 `;
 
-export const HeaderBlock = withRouter(({ history }) => {
+type Props = {
+  showExitButton?: boolean,
+};
+
+const HeaderBlock = (props: Props) => {
   const existingPk = Storage.get(STORAGE_KEYS.PRIVATE_KEY);
   if (!existingPk) return <p>Not logged in</p>;
+  console.log(props.location);
   return (
     <HeaderWrapper>
-     <MainLink href="/">
-       <Title>
-         25 <span style={{ color: '#ff00f2' }}>BEEN</span>
-       </Title>
-     </MainLink>
-      <MyProfileButton href="/profile">
-        <img src={myProfileIcon} />
-      </MyProfileButton>
+      <MainLink href="/">
+        <Title>
+          25 <span style={{ color: '#ff00f2' }}>BEEN</span>
+        </Title>
+      </MainLink>
+      {!props.showExitButton &&
+        <MyProfileButton href="/profile">
+          <img src={myProfileIcon}/>
+        </MyProfileButton>
+      }
+      {!!props.showExitButton &&
+        <MyProfileButton href="/">
+          <img src={closeIcon}/>
+        </MyProfileButton>
+      }
       <BeansImage src={beansImage} />
-      { /* <button onClick={() => {
-        history.push('/');
-        Storage.reset();
-      }}
-      >
-        Sign out
-      </button>
-      <a href="/">Quiz</a>
-      <a href="/agenda">Agenda</a> */ }
     </HeaderWrapper>
   );
-});
+};
+
+export default HeaderBlock;

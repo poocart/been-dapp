@@ -6,12 +6,11 @@ import Home from './Home';
 import Agenda from './Agenda';
 import {
   BrowserRouter as Router,
+  Switch,
   Route,
   Redirect,
-  withRouter
 } from 'react-router-dom';
 import Profile from './Profile';
-import { HeaderBlock } from '../components/HeaderBlock';
 
 import { Storage, STORAGE_KEYS } from '../services/storage';
 
@@ -52,13 +51,12 @@ export default class App extends React.Component {
     return (
       <Router>
         <GlobalStyle />
-        <div>
-          <HeaderBlock/>
-          <PrivateRoute path='/' component={LoggedIn} />
+        <Switch>
+          <PrivateRoute exact path='/' component={LoggedIn} />
           <PrivateRoute exact path='/profile' component={Profile} />
           <PrivateRoute exact path='/agenda' component={Agenda} />
-          <Route exact path="/:pk" component={Home} />
-        </div>
+          <Route path="/:pk" component={Home} />
+        </Switch>
       </Router>
     )
   }
