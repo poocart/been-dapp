@@ -135,7 +135,7 @@ class ProfileContainer extends React.Component<*, State> {
     const { qrCode } = this.state;
     return (
       <div>
-        <HeaderBlock />
+        <HeaderBlock showExitButton />
         <ProfileWrapper>
           {!!qrCode && <QRCodeImage src={qrCode} />}
           <ProfileSettings>

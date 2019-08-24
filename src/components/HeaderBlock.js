@@ -27,6 +27,16 @@ const MyProfileButton = styled.a`
   right: 10px;
 `;
 
+const ExitButton = styled.a`
+  position: absolute;
+  height: 60%;
+  top: 20%;
+  right: 0px;
+  display: flex;
+  padding: 0px 10px;
+  border-left: 2px solid #000;
+`;
+
 const MainLink = styled.a`
   text-decoration: none;
 `;
@@ -45,7 +55,6 @@ type Props = {
 const HeaderBlock = (props: Props) => {
   const existingPk = Storage.get(STORAGE_KEYS.PRIVATE_KEY);
   if (!existingPk) return <p>Not logged in</p>;
-  console.log(props.location);
   return (
     <HeaderWrapper>
       <MainLink href="/">
@@ -59,9 +68,9 @@ const HeaderBlock = (props: Props) => {
         </MyProfileButton>
       }
       {!!props.showExitButton &&
-        <MyProfileButton href="/">
+        <ExitButton href="/">
           <img src={closeIcon}/>
-        </MyProfileButton>
+        </ExitButton>
       }
       <BeansImage src={beansImage} />
     </HeaderWrapper>
