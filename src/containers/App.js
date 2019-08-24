@@ -27,9 +27,6 @@ const GlobalStyle = createGlobalStyle`
   input:focus {
     outline: none;
   }
-  html, body {
-    overflow: hidden;
-  }
   body {
     background-color: #f9f9f9;
     padding: 20px;
