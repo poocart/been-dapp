@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 
 import LoggedIn from './LoggedIn';
 import Home from './Home';
-import Agenda from './Agenda';
+import AgendaScreen from './Agenda';
 import {
   BrowserRouter as Router,
   Switch,
@@ -58,7 +58,7 @@ export default class App extends React.Component {
           <Switch>
             <PrivateRoute exact path='/' component={LoggedIn} />
             <PrivateRoute exact path='/profile' component={Profile} />
-            <PrivateRoute exact path='/agenda' component={Agenda} />
+            <PrivateRoute exact path='/agenda' component={AgendaScreen} />
             <Route path="/:pk" component={Home} />
           </Switch>
         </Router>
