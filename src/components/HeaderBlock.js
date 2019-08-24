@@ -87,7 +87,7 @@ class HeaderBlock extends React.Component<Props> {
       </HeaderWrapper>
     );
   }
-};
+}
 
 const mapStateToProps = ({
   wallet: { balance },
