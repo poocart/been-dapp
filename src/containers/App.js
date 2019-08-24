@@ -1,5 +1,5 @@
 import React from 'react';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { connect, Provider } from 'react-redux';
 
 import LoggedIn from './LoggedIn';
@@ -31,6 +31,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: #f9f9f9;
     padding: 20px;
+    font-family: Karla;
   }
 `;
 
@@ -47,8 +48,41 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   }} />
 );
 
+const LoadingWrapper = styled.div`
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+`;
+
+const LoadingText = styled.p`
+  margin-bottom: 25px;
+  font-size: 26px;
+  font-weight: 700;
+`;
+
 type State = {
   needToInitialize: boolean,
+};
+
+const loadingGifs = [
+  'https://media.giphy.com/media/s05af72MALT9K/giphy.gif',
+  'https://media.giphy.com/media/4KLv24CPUoZ0I/giphy.gif',
+  'https://media.giphy.com/media/3txF7DEwHN2X6/giphy.gif',
+  'https://media.giphy.com/media/9eSJ3YKbFDtS0/giphy.gif',
+  'https://media.giphy.com/media/KWhmkHq7zVkOc/giphy.gif',
+];
+
+const randomLoadingGif = () => {
+  const index = Math.floor(Math.random() * loadingGifs.length);
+  console.log('index: ', index);
+  return loadingGifs[index];
 };
 
 class App extends React.Component<{}, State> {
@@ -72,15 +106,17 @@ class App extends React.Component<{}, State> {
   render() {
     const { needToInitialize } = this.state;
     const { isSdkInitialized } = this.props;
-
     return (
       <div>
+        <GlobalStyle />
         {!isSdkInitialized && needToInitialize && (
-          <div>Loading...</div>
+          <LoadingWrapper>
+            <LoadingText>Loading...</LoadingText>
+            <img src={randomLoadingGif()} />
+          </LoadingWrapper>
         )}
         {(isSdkInitialized || !needToInitialize) && (
           <Router>
-            <GlobalStyle />
             <Switch>
               <PrivateRoute exact path='/' component={LoggedIn} />
               <PrivateRoute exact path='/profile' component={Profile} />
