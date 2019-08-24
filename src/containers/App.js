@@ -21,12 +21,17 @@ export default class App extends React.Component {
     const { quizzes = [] } = this.state;
     return (
       <div>
-        {quizzes.map(({ name, questions }) => (
-          <Quiz
-            name={name}
-            questions={questions}
-          />
-        ))}
+        {quizzes.map(({ name, questions }, index) => {
+          const quizId = `quiz-${index}`;
+          return (
+            <Quiz
+              name={name}
+              quizId={quizId}
+              questions={questions}
+              key={quizId}
+            />
+          );
+        })}
       </div>
     )
   }

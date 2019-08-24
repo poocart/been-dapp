@@ -1,7 +1,8 @@
 // @flow
 
 export const ENDPOINTS = {
-  GET_QUIZZES: 'mocks/quizzes.json'
+  GET_QUIZZES: 'mocks/quizzes.json',
+  SUBMIT_QUIZ: '/',
 };
 
 class ApiServiceWrapper {
@@ -11,7 +12,23 @@ class ApiServiceWrapper {
       .catch(this.handleError)
   }
 
+  submit(endpoint: string, payload?: Object) {
+    let config = {
+      method: 'POST',
+    };
+    if (payload) {
+      config = {
+        ...config,
+        body: JSON.stringify(payload),
+      }
+    }
+    return fetch(endpoint, config)
+      .then(response => response.json())
+      .catch(this.handleError)
+  }
+
   handleError(error) {
+    console.log('error: ', error);
     return {
       title: 'Error message',
       message: 'Failed to request',
