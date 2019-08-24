@@ -35,7 +35,8 @@ export default class Home extends React.Component {
     const { redirectToReferrer } = this.state;
 
     if (redirectToReferrer) {
-      return <Redirect to={from} />
+      // return <Redirect to={from} />
+      return <Redirect to={{ pathname: '/loggedIn' }} />
     }
 
     return (

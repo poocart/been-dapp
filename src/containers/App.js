@@ -47,12 +47,12 @@ export default class App extends React.Component {
       <Router>
         <div>
           <AuthButton/>
-          <ul>
-            <li><Link to="/">Home Page</Link></li>
-          </ul>
+          {/*<ul>*/}
+            {/*<li><Link to="/">Home Page</Link></li>*/}
+          {/*</ul>*/}
+          <PrivateRoute exact path='/loggedIn' component={LoggedIn} />
           <Route exact path="/:pk" component={Home} />
           <Route exact path="/" component={Home} />
-          <PrivateRoute path='/loggedIn' component={LoggedIn} />
         </div>
       </Router>
     )
