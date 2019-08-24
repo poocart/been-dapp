@@ -14,7 +14,7 @@ class Agenda extends React.Component<*, State> {
   };
 
   componentDidMount() {
-    if (!Storage.isStored(STORAGE_KEYS.PRIVATE_KEY)) this.props.history.push('/')
+    if (!Storage.isStored(STORAGE_KEYS.PRIVATE_KEY)) this.props.history.push('/');
 
     ApiService
       .get(ENDPOINTS.GET_AGENDA)

@@ -4,6 +4,7 @@ import Quiz from '../components/Quiz';
 import { ApiService, ENDPOINTS } from '../services/api';
 import type { Quiz as QuizModel } from '../models/Quiz';
 import { Storage, STORAGE_KEYS } from "../services/storage";
+import Modal from "react-responsive-modal";
 
 type State = {
   quizzes?: QuizModel[],
@@ -25,24 +26,23 @@ export default class LoggedIn extends React.Component<*, State> {
       .then(quizzes => this.setState({ quizzes }));
   }
 
-  onPayWithDataClick = async () => {
+  onScannerClick = () => {
+    
+  };
+
+  onShareDetails = async () => {
     const { profile } = this.state;
     if (!Object.keys(profile).length) return;
     const qrCode = await QRCodeGenerator.toDataURL(JSON.stringify(profile), { margin: 0 });
     this.setState({ qrCode });
   };
 
-  onReceiveContactClick = () => {
-
-  };
-
   render() {
     const { quizzes, qrCode } = this.state;
     return (
       <div>
-        {!!qrCode && <img src={qrCode} />}
-        <button onClick={this.onPayWithDataClick}>Pay with your data</button>
-        <button onClick={this.onReceiveContactClick}>Receive contact information</button>
+        <button onClick={this.onScannerClick}>SCAN</button>
+        <button onClick={this.onShareDetails}>Share my details</button>
           {quizzes.map(({ name, questions }, index) => {
             const quizId = `quiz-${index}`;
             return (
@@ -54,6 +54,9 @@ export default class LoggedIn extends React.Component<*, State> {
               />
             );
           })}
+        <Modal open={!!qrCode} onClose={() => this.setState({ qrCode: null })} center>
+          <img src={qrCode} />
+        </Modal>
       </div>
     )
   }

@@ -1,4 +1,6 @@
 import React from 'react';
+import { createGlobalStyle } from 'styled-components'
+
 import LoggedIn from './LoggedIn';
 import Home from './Home';
 import Agenda from './Agenda';
@@ -10,6 +12,26 @@ import {
 } from 'react-router-dom';
 import Profile from './Profile';
 import { Storage, STORAGE_KEYS } from '../services/storage';
+
+const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css?family=Karla&display=swap');
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  input:focus {
+    outline: none;
+  }
+  html, body {
+    overflow: hidden;
+  }
+  body {
+    background-color: #f9f9f9;
+    font-family: Karla;
+    padding: 0px 20px;
+  }
+`;
+
 
 const AuthButton = withRouter(({ history }) => {
   const existingPk = Storage.get(STORAGE_KEYS.PRIVATE_KEY);
@@ -45,6 +67,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Router>
+        <GlobalStyle />
         <div>
           <AuthButton/>
           <PrivateRoute path='/' component={LoggedIn} />
