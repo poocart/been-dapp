@@ -2,6 +2,7 @@
 
 export const ENDPOINTS = {
   GET_QUIZZES: 'mocks/quizzes.json',
+  GET_AGENDA: 'mocks/agenda.json',
   SUBMIT_QUIZ: '/',
 };
 
