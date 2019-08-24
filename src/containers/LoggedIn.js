@@ -16,6 +16,34 @@ const Container = styled.div`
   justify-content: space-between;
 `;
 
+const AssetsWrapper = styled.div`
+  flex-direction: row;
+  margin: 10px -5px 0;
+  clear: both;
+`;
+
+const PointsWrapper = styled.div`
+  width: 50%;
+  display: inline-block;
+  font-size: 0;
+  padding: 0 5px;
+  box-sizing: border-box;
+  float: left;
+  position: relative;
+`;
+
+const InnerWrapper = styled.div`
+  border: 2px solid black;
+  font-size: 20px;
+  padding-bottom: 100%;
+  height: 130px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+`;
+
 const ContentWrapper = styled.div`
   display: flex;
   flex-grow: 1;
@@ -50,6 +78,57 @@ const CameraCloseButton = styled.button`
   background: none;
   font-size: 18px;
   font-weight: 700;
+`;
+
+const TopTitle = styled.h1`
+  font-size: 60px;
+  line-height: 50px;
+  text-align: center;
+  color: #000000;
+`;
+
+const Title = styled.h1`
+  font-size: 25px;
+  text-align: center;
+  color: #000000;
+  font-weight: 600;
+`;
+
+const Circle = styled.div`
+  width: calc(100% - 10px);
+  padding-bottom: calc(100% - 10px);
+  border-radius: 100%;
+  background-color: #FED200;
+  position: absolute;
+  top: 2px;
+  right: 5px;
+  z-index: -1;
+`;
+
+const Placer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+`;
+
+const GetMoreBadgesButton = styled.a`
+  border: 2px solid black;
+  padding: 20px;
+  text-styling: none;
+  font-size: 16px;
+  margin-top: 10px;
+  position: relative;
+`;
+
+const Line = styled.div`
+  width: 80px;
+  height: 12px;
+  background-color: red;
+  position: absolute;
+  right: 0;
+  top: 5px;
+  transform: rotate(-45deg);
 `;
 
 type State = {
@@ -89,7 +168,7 @@ export default class LoggedIn extends React.Component<*, State> {;
     console.log('result: ', result);
   };
 
-  handleCameraClose = (err?) => {
+  handleCameraClose = () => {
     this.setState({ cameraActive: false });
   };
 
@@ -99,8 +178,38 @@ export default class LoggedIn extends React.Component<*, State> {;
       <Container>
         <ContentWrapper>
           <HeaderBlock />
-          <button onClick={this.onScannerClick}>SCAN</button>
-          <Agenda agenda={agenda} showMore />
+          <AssetsWrapper>
+            <PointsWrapper>
+              <InnerWrapper>
+                <Placer>
+                  <TopTitle style={{ color: '#0000FF' }}>
+                    20
+                  </TopTitle>
+                  <Title>
+                    BEANS
+                  </Title>
+                </Placer>
+              </InnerWrapper>
+            </PointsWrapper>
+            <PointsWrapper>
+              <InnerWrapper>
+                <Circle />
+                <Placer>
+                  <TopTitle>
+                    3
+                  </TopTitle>
+                  <Title>
+                    BADGES
+                  </Title>
+                </Placer>
+              </InnerWrapper>
+            </PointsWrapper>
+          </AssetsWrapper>
+          <GetMoreBadgesButton>
+            Get more badges
+            <Line />
+          </GetMoreBadgesButton>
+          <Agenda agenda={agenda} showMore style={{ marginTop: 10 }} />
         </ContentWrapper>
         <FooterWrapper>
           <ScannerButton onClick={() => this.setState({ cameraActive: true })}>
