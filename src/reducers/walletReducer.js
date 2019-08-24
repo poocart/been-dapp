@@ -1,10 +1,12 @@
 // @flow
 import {
+  INIT_WALLET_SDK,
   SET_BALANCE,
 } from '../constants/walletConstants';
 
 export type WalletReducerState = {
   balance: string,
+  isSdkInitialized: boolean,
 }
 
 export type WalletReducerAction = {
@@ -14,6 +16,7 @@ export type WalletReducerAction = {
 
 const initialState = {
   balance: '',
+  isSdkInitialized: false,
 };
 
 export default function walletReducer(
@@ -25,6 +28,11 @@ export default function walletReducer(
       return {
         ...state,
         balance: action.payload,
+      };
+    case INIT_WALLET_SDK:
+      return {
+        ...state,
+        isSdkInitialized: action.payload,
       };
     default:
       return state;
