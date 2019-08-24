@@ -27,6 +27,9 @@ class ApiServiceWrapper {
   submit(endpoint: string, payload?: Object) {
     let config = {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     };
     if (payload) {
       config = {

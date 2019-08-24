@@ -18,17 +18,16 @@ class Quiz extends React.Component<Prop, State> {
   state = {};
 
   onSubmitClick = () => {
+    const { name } = this.props;
     const { answers } = this.state;
     if (!answers) return;
-    const mapped = Object.keys(answers)
-      .reduce((acc, questionIndex) => {
-        acc[questionIndex] = answers[questionIndex];
-        return acc;
-      }, {});
-    console.log('mapped: ', mapped);
+    const sequence = Object.values(answers).join('');
     ApiService
-      .submit(ENDPOINTS.SUBMIT_QUIZ, mapped)
-      .then(response => console.log('response: ', response));
+      .submit(ENDPOINTS.SUBMIT_QUIZ, {
+        pubkey: "0x1",
+        name,
+        sequence
+      });
   };
 
   onAnswerChange = (question, answer) => {
@@ -70,7 +69,7 @@ class Quiz extends React.Component<Prop, State> {
             </div>
           );
         })}
-        <button onClick={this.onSubmitClick}>Submit answers</button>
+        <button onClick={() => this.onSubmitClick()}>Submit answers</button>
       </div>
     )
   }
