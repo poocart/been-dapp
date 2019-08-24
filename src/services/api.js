@@ -1,15 +1,27 @@
 // @flow
 
+const apiHost = 'https://bean-there.herokuapp.com/';
+
 export const ENDPOINTS = {
-  GET_QUIZZES: 'mocks/quizzes.json',
+  GET_QUIZZES: 'get-quiz',
   GET_AGENDA: 'mocks/agenda.json',
-  SUBMIT_QUIZ: '/',
+  SUBMIT_QUIZ: 'check-answer',
 };
 
+const apiUrl = endpoint => `${apiHost}${endpoint}`;
+
 class ApiServiceWrapper {
-  get(endpoint: string) {
-    return fetch(endpoint)
+  get(endpoint: string, queryParams: Object = {}) {
+    let finalEndpoint = apiUrl(endpoint);
+    if (Object.keys(queryParams).length) {
+      const query = Object.keys(queryParams)
+        .map(key => key + '=' + queryParams[key])
+        .join('&');
+      finalEndpoint = `${finalEndpoint}?${query}`;
+    }
+    return fetch(finalEndpoint)
       .then(response => response.json())
+      .then(json => json.body)
       .catch(this.handleError)
   }
 
@@ -23,7 +35,7 @@ class ApiServiceWrapper {
         body: JSON.stringify(payload),
       }
     }
-    return fetch(endpoint, config)
+    return fetch(apiUrl(endpoint), config)
       .then(response => response.json())
       .catch(this.handleError)
   }
