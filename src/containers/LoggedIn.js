@@ -153,7 +153,7 @@ export default class LoggedIn extends React.Component<*, State> {;
       .get(ENDPOINTS.GET_QUIZZES, { pubkey: publicKey })
       .then(quizzes => this.setState({ quizzes: quizzes || [] }));
 
-    fetch('http://www.mocky.io/v2/5d618e563200005d008e6126')
+    fetch(ENDPOINTS.GET_AGENDA)
       .then(response => response.json())
       .then(json => {
         const threeFirstEvents = json.slice(0, 3);
@@ -162,10 +162,15 @@ export default class LoggedIn extends React.Component<*, State> {;
       .catch(() => {})
   }
 
-  handleCameraScan = (result) => {
-    if (!result) return;
+  handleCameraScan = (rawResult) => {
+    if (!rawResult) return;
     this.setState({ cameraActive: false });
-    console.log('result: ', result);
+    try {
+      const result = JSON.parse(rawResult) || {};
+      console.log('result: ', result);
+    } catch {
+      // no result
+    }
   };
 
   handleCameraClose = () => {
