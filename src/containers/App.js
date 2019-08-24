@@ -1,6 +1,7 @@
 import React from 'react';
 import LoggedIn from './LoggedIn';
 import Home from './Home';
+import Agenda from './Agenda';
 import {
   BrowserRouter as Router,
   Route,
@@ -28,13 +29,13 @@ const AuthButton = withRouter(({ history }) => {
 });
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={(props) => {
+  <Route exact {...rest} render={(props) => {
     return (
       Storage.isStored(STORAGE_KEYS.PRIVATE_KEY)
         ? <Component {...props} />
         : <Redirect to={{
-          pathname: '/',
-          state: { from: props.location }
+          pathname: '/signup',
+          state: { from: props.location },
         }} />
     )
   }} />
@@ -46,13 +47,11 @@ export default class App extends React.Component {
       <Router>
         <div>
           <AuthButton/>
-          {/*<ul>*/}
-            {/*<li><Link to="/">Home Page</Link></li>*/}
-          {/*</ul>*/}
+          <PrivateRoute path='/' component={LoggedIn} />
           <PrivateRoute exact path='/loggedIn' component={LoggedIn} />
           <PrivateRoute exact path='/profile' component={Profile} />
           <Route exact path="/:pk" component={Home} />
-          <Route exact path="/" component={Home} />
+          <Route exact path="/agenda" component={Agenda} />
         </div>
       </Router>
     )

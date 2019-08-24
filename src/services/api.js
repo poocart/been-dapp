@@ -4,6 +4,7 @@ const apiHost = 'https://bean-there.herokuapp.com/';
 
 export const ENDPOINTS = {
   GET_QUIZZES: 'get-quiz',
+  GET_AGENDA: 'mocks/agenda.json',
   SUBMIT_QUIZ: 'check-answer',
 };
 
