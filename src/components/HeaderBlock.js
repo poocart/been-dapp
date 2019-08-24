@@ -1,12 +1,14 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
 
 import { Storage, STORAGE_KEYS } from '../services/storage';
 
 import myProfileIcon from '../assets/images/profile.svg';
 import beansImage from '../assets/images/beens.svg';
 import closeIcon from '../assets/images/close.svg';
+import { fetchBalanceAction } from '../actions/walletActions';
 
 const HeaderWrapper = styled.div`
   padding: 10px 14px;
@@ -51,31 +53,51 @@ const BeansImage = styled.img`
 
 type Props = {
   showExitButton?: boolean,
+  balance: string,
+  fetchBalance: Function,
 };
 
-const HeaderBlock = (props: Props) => {
-  const existingPk = Storage.get(STORAGE_KEYS.PRIVATE_KEY);
-  if (!existingPk) return <p>Not logged in</p>;
-  return (
-    <HeaderWrapper>
-      <MainLink href="/">
-        <Title>
-          25 <span style={{ color: '#ff00f2' }}>BEEN</span>
-        </Title>
-      </MainLink>
-      {!props.showExitButton &&
+class HeaderBlock extends React.Component<Props> {
+  componentDidMount() {
+    this.props.fetchBalance();
+  }
+
+  render() {
+    const existingPk = Storage.get(STORAGE_KEYS.PRIVATE_KEY);
+    if (!existingPk) return <p>Not logged in</p>;
+    console.log(this.props.location);
+    return (
+      <HeaderWrapper>
+        <MainLink href="/">
+          <Title>
+            {this.props.balance || 0} <span style={{ color: '#ff00f2' }}>BEEN</span>
+          </Title>
+        </MainLink>
+        {!this.props.showExitButton &&
         <MyProfileButton href="/profile">
           <img src={myProfileIcon}/>
         </MyProfileButton>
-      }
-      {!!props.showExitButton &&
+        }
+        {!!this.props.showExitButton &&
         <ExitButton href="/">
           <img src={closeIcon}/>
         </ExitButton>
-      }
-      <BeansImage src={beansImage} />
-    </HeaderWrapper>
-  );
+        }
+        <BeansImage src={beansImage}/>
+      </HeaderWrapper>
+    );
+  }
 };
 
-export default HeaderBlock;
+const mapStateToProps = ({
+  wallet: { balance },
+}) => ({
+  balance,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchBalance: () => dispatch(fetchBalanceAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HeaderBlock);
+

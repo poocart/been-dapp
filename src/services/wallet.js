@@ -10,8 +10,9 @@ import { toChecksumAddress } from '@netgum/utils';
 import { BigNumber } from 'bignumber.js';
 
 const NETWORK_PROVIDER = 'ropsten';
+const TOKEN_ADDRESS = '0xF383e4C078b34Da69534A7B7F1F381d418315273';
 
-class SmartWallet {
+class Wallet {
   sdk: Sdk;
   sdkInitialized: boolean = false;
 
@@ -76,8 +77,8 @@ class SmartWallet {
     return get(this.sdk, 'state.account.balance.virtual', new BigNumber(0));
   }
 
-  getAccountStakedAmount(tokenAddress: ?string): BigNumber {
-    return this.sdk.getConnectedAccountVirtualBalance(tokenAddress)
+  getAccountBalance(): BigNumber {
+    return this.sdk.getConnectedAccountVirtualBalance(TOKEN_ADDRESS)
       .then(data => {
         let value;
         if (data.items) { // NOTE: we're getting the data.items response when tokenAddress is null
@@ -164,5 +165,4 @@ class SmartWallet {
   }
 }
 
-const smartWalletInstance = new SmartWallet();
-export default smartWalletInstance;
+export default new Wallet();

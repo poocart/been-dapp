@@ -4,7 +4,7 @@ import Modal from 'react-responsive-modal';
 import { ethers } from 'ethers';
 import { Redirect } from 'react-router-dom';
 import { Storage, STORAGE_KEYS } from '../services/storage';
-import smartWalletService from '../services/smartWallet';
+import smartWalletService from '../services/wallet';
 import HeaderBlock from "../components/HeaderBlock";
 
 type State = {
