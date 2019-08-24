@@ -1,7 +1,8 @@
+// @flow
 import React from 'react';
 
 import type { Questions } from '../models/Quiz';
-import {ApiService, ENDPOINTS} from "../services/api";
+import { ApiService, ENDPOINTS } from "../services/api";
 
 type Prop = {
   name: string,
