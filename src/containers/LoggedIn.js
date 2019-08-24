@@ -31,33 +31,22 @@ export default class LoggedIn extends React.Component<*, State> {
 
   };
 
-  onShareDetails = async () => {
-    const { profile } = this.state;
-    if (!Object.keys(profile).length) return;
-    const qrCode = await QRCodeGenerator.toDataURL(JSON.stringify(profile), { margin: 0 });
-    this.setState({ qrCode });
-  };
-
   render() {
     const { quizzes, qrCode } = this.state;
     return (
       <div>
         <button onClick={this.onScannerClick}>SCAN</button>
-        <button onClick={this.onShareDetails}>Share my details</button>
-          {quizzes.map(({ name, questions }, index) => {
-            const quizId = `quiz-${index}`;
-            return (
-              <Quiz
-                name={name}
-                quizId={quizId}
-                questions={questions}
-                key={quizId}
-              />
-            );
-          })}
-        <Modal open={!!qrCode} onClose={() => this.setState({ qrCode: null })} center>
-          <img src={qrCode} />
-        </Modal>
+        {quizzes.map(({ name, questions }, index) => {
+          const quizId = `quiz-${index}`;
+          return (
+            <Quiz
+              name={name}
+              quizId={quizId}
+              questions={questions}
+              key={quizId}
+            />
+          );
+        })}
       </div>
     )
   }

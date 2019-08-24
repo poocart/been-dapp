@@ -20,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
+    font-family: Karla;
   }
   input:focus {
     outline: none;
@@ -29,7 +30,6 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     background-color: #f9f9f9;
-    font-family: Karla;
     padding: 20px;
   }
 `;
