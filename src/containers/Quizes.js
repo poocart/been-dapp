@@ -80,7 +80,7 @@ export default class Quizes extends React.Component<*, State> {
             const { name } = quiz;
             const iconName = name === 'pillar' ? pillaristaIcon : boxIcon;
              return (
-              <QuizCard to={`/quizes/${name}`}>
+              <QuizCard to={`/quizes/${name}`} key={quizId}>
                 <InnerWrapper>
                   <BadgeImage src={iconName} />
                   <Title>{name}</Title>
