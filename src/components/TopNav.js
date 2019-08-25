@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const backIcon = require('../assets/images/back.png');
-
 
 const TopNavWrapper = styled.div`
   flex: 1;
@@ -12,7 +12,7 @@ const TopNavWrapper = styled.div`
   margin: 10px 0;
 `;
 
-const BackButton = styled.a`
+const BackButton = styled(Link)`
   position: absolute;
   top: 50%;
   left: 0;
@@ -30,10 +30,11 @@ const MainTitle = styled.h1`
   color: black;
 `;
 
-export const TopNav = ({ title }) => {
+export const TopNav = ({ title, customOnBack }) => {
+  const to = customOnBack || '/';
   return (
     <TopNavWrapper>
-      <BackButton href="/">
+      <BackButton to={to}>
         <BackIcon src={backIcon} />
       </BackButton>
       <MainTitle>

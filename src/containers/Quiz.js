@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Modal from 'react-responsive-modal';
+import { Link } from 'react-router-dom';
 import Quiz from '../components/Quiz';
 import { ApiService, ENDPOINTS } from '../services/api';
 import type { Quiz as QuizModel } from '../models/Quiz';
@@ -8,7 +9,7 @@ import {Storage, STORAGE_KEYS} from "../services/storage";
 import HeaderBlock from "../components/HeaderBlock";
 import { TopNav } from "../components/TopNav";
 
-const ConfirmButton = styled.a`
+const ConfirmButton = styled(Link)`
   margin-top: 35px;
   text-align: center;
   background: #0ad604;
@@ -82,7 +83,6 @@ export default class QuizScreen extends React.Component<*, State> {
   }
 
   onSubmit = () => {
-    console.log('---> called');
     this.setState({ showModal: true, checkingData: true })
     setTimeout(() => {
       this.setState({
@@ -91,6 +91,8 @@ export default class QuizScreen extends React.Component<*, State> {
     }, 3000);
   };
 
+
+
   render() {
     const { quiz, showModal, checkingData } = this.state;
     const { name = '', quizId ='', questions = [] } = quiz;
@@ -98,7 +100,7 @@ export default class QuizScreen extends React.Component<*, State> {
     return (
       <Container>
         <HeaderBlock />
-        <TopNav title={name} />
+        <TopNav title={name} customOnBack="/quizes" />
         <Quiz
             name={name}
             quizId={quizId}
@@ -106,7 +108,7 @@ export default class QuizScreen extends React.Component<*, State> {
             key={quizId}
             onSubmit={this.onSubmit}
           />
-        <Modal open={showModal} onClose={() => this.toggleCheckModal(false)} center>
+        <Modal open={showModal} onClose={() => this.setState({ showModal: false })} center>
           {!!checkingData &&
             <React.Fragment>
               <p style={{ marginBottom: 14 }}>Checking your answers...</p>
@@ -122,7 +124,7 @@ export default class QuizScreen extends React.Component<*, State> {
             </BadgeHolder>
             <p>Congrats! You've just received a badge.</p>
             {name === '3box' && <p>Meet 3box team at their booth, show the badge and get yourself a t-shirt too!</p>}
-            <ConfirmButton style={{ marginTop: 15 }} href="/badges">Claim it</ConfirmButton>
+            <ConfirmButton style={{ marginTop: 15 }} to="/badges">Claim it</ConfirmButton>
           </React.Fragment>}
         </Modal>
       </Container>

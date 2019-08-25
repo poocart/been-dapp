@@ -1,11 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const AgendaWrapper = styled.div`
   border: 2px solid #000000;
 `;
 
-const AgendaItemWrapper = styled.a`
+const AgendaItemWrapper = styled.div`
   padding: 12px 14px 0 14px;
   margin-bottom: -1px;
   text-decoration: none;
@@ -48,7 +49,7 @@ const BigText = styled.p`
   display: inline-block;
 `;
 
-const MoreButton = styled.a`
+const MoreButton = styled(Link)`
   font-size: 14px;
   background-color: #000000;
   color: #ffffff;
@@ -92,7 +93,7 @@ export const Agenda = ({ agenda, showMore, style }) => {
         })}
       </AgendaWrapper>
       {!!showMore &&
-      <MoreButton href="/agenda">
+      <MoreButton to="/agenda">
         more...
       </MoreButton>}
     </Wrapper>

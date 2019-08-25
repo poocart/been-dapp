@@ -5,6 +5,7 @@ import { ApiService, ENDPOINTS } from '../services/api';
 import type { Quiz as QuizModel } from '../models/Quiz';
 import {Storage, STORAGE_KEYS} from "../services/storage";
 import HeaderBlock from "../components/HeaderBlock";
+import { Link } from 'react-router-dom';
 
 type State = {
   quizzes?: QuizModel[],
@@ -20,7 +21,7 @@ const CardsWrapper = styled.div`
   margin: 5px -5px 0;
 `;
 
-const QuizCard = styled.a`
+const QuizCard = styled(Link)`
   width: 50%;
   text-decoration: none;
 `;
@@ -77,10 +78,9 @@ export default class Quizes extends React.Component<*, State> {
         <CardsWrapper>
           {quizzes.map((quiz, index) => {
             const { name } = quiz;
-            const quizId = `quiz-${index}`;
             const iconName = name === 'pillar' ? pillaristaIcon : boxIcon;
              return (
-              <QuizCard href={`/quizes/${name}`}>
+              <QuizCard to={`/quizes/${name}`}>
                 <InnerWrapper>
                   <BadgeImage src={iconName} />
                   <Title>{name}</Title>

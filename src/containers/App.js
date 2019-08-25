@@ -79,6 +79,7 @@ class App extends React.Component<{}, State> {
   render() {
     const { needToInitialize } = this.state;
     const { isSdkInitialized } = this.props;
+
     return (
       <div>
         <GlobalStyle />
@@ -112,7 +113,6 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const AppWithState = connect(mapStateToProps, mapDispatchToProps)(App);
-
 
 const AppRoot = () => (
   <Provider store={store}>

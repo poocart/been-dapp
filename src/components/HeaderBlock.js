@@ -2,12 +2,12 @@
 import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import Loading from '../components/Loading';
 import { Storage, STORAGE_KEYS } from '../services/storage';
 
 import myProfileIcon from '../assets/images/profile.svg';
-import beansImage from '../assets/images/beens.svg';
 import closeIcon from '../assets/images/close.svg';
 import { fetchBalanceAction } from '../actions/walletActions';
 
@@ -24,14 +24,14 @@ const Title = styled.h1`
   margin-right: 40px;
 `;
 
-const MyProfileButton = styled.a`
+const MyProfileButton = styled(Link)`
   position: absolute;
   top: 50%;
   margin-top: -18px;
   right: 10px;
 `;
 
-const ExitButton = styled.a`
+const ExitButton = styled(Link)`
   position: absolute;
   height: 60%;
   top: 20%;
@@ -41,15 +41,8 @@ const ExitButton = styled.a`
   border-left: 2px solid #000;
 `;
 
-const MainLink = styled.a`
+const MainLink = styled(Link)`
   text-decoration: none;
-`;
-
-const BeansImage = styled.img`
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
 `;
 
 type Props = {
@@ -66,18 +59,18 @@ class HeaderBlock extends React.Component<Props> {
     if (!existingPk) return <Loading />;
     return (
       <HeaderWrapper>
-        <MainLink href="/">
+        <MainLink to="/">
           <Title>
             ETHBerlin
           </Title>
         </MainLink>
         {!this.props.showExitButton &&
-        <MyProfileButton href="/profile">
+        <MyProfileButton to="/profile">
           <img src={myProfileIcon}/>
         </MyProfileButton>
         }
         {!!this.props.showExitButton &&
-        <ExitButton href="/">
+        <ExitButton to="/">
           <img src={closeIcon}/>
         </ExitButton>
         }

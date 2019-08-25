@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import QRScanner from 'react-qr-reader'
 import { BigNumber } from 'bignumber.js';
+import { withRouter } from 'react-router-dom';
 import { Agenda } from '../components/Agenda';
 import { ApiService, ENDPOINTS } from '../services/api';
 import { Storage, STORAGE_KEYS } from "../services/storage";
@@ -14,6 +15,7 @@ import Modal from "react-responsive-modal";
 import smartWalletService from '../services/wallet';
 import {fetchBalanceAction} from "../actions/walletActions";
 import {connect} from "react-redux";
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   min-height: calc(100vh - 40px);
@@ -28,7 +30,7 @@ const AssetsWrapper = styled.div`
   clear: both;
 `;
 
-const PointsWrapper = styled.a`
+const PointsWrapper = styled(Link)`
   width: 50%;
   display: inline-block;
   font-size: 0;
@@ -118,7 +120,7 @@ const Placer = styled.div`
   transform: translateY(-50%) translateX(-50%);
 `;
 
-const GetMoreBadgesButton = styled.a`
+const GetMoreBadgesButton = styled(Link)`
   border: 2px solid black;
   padding: 20px;
   text-styling: none;
@@ -330,7 +332,7 @@ class LoggedIn extends React.Component<*, State> {;
                 </Placer>
               </InnerWrapper>
             </PointsWrapper>
-            <PointsWrapper href="/badges">
+            <PointsWrapper to="/badges">
               <InnerWrapper>
                 <Circle />
                 <Placer>
@@ -344,7 +346,7 @@ class LoggedIn extends React.Component<*, State> {;
               </InnerWrapper>
             </PointsWrapper>
           </AssetsWrapper>
-          <GetMoreBadgesButton href="/quizes">
+          <GetMoreBadgesButton to="/quizes">
             Get more badges
             <Line />
           </GetMoreBadgesButton>
@@ -415,4 +417,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchBalance: () => dispatch(fetchBalanceAction()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoggedIn);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoggedIn));
