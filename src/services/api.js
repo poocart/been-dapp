@@ -6,6 +6,7 @@ export const ENDPOINTS = {
   GET_QUIZZES: 'get-quiz',
   GET_AGENDA: 'mocks/agenda.json',
   SUBMIT_QUIZ: 'check-answer',
+  SUBMIT_PERSONAL_DATA: 'insert-seller',
 };
 
 const apiUrl = endpoint => `${apiHost}${endpoint}`;

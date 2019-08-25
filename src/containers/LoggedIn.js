@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import QRScanner from 'react-qr-reader'
+import { BigNumber } from 'bignumber.js';
 import { Agenda } from '../components/Agenda';
 import { ApiService, ENDPOINTS } from '../services/api';
 import { Storage, STORAGE_KEYS } from "../services/storage";
@@ -9,6 +10,8 @@ import PayModal from "../components/PayModal";
 
 import scanIcon from '../assets/images/scan.svg';
 import Modal from "react-responsive-modal";
+
+import smartWalletService from '../services/wallet';
 
 const Container = styled.div`
   min-height: calc(100vh - 40px);
@@ -157,6 +160,7 @@ type State = {
   hidePayWithBeans: boolean,
   payWithPointsModalVisible: boolean,
   payWithDataModalVisible: boolean,
+  successModalVisible: boolean,
   scanResult: Object,
 };
 
@@ -187,6 +191,7 @@ export default class LoggedIn extends React.Component<*, State> {;
       hidePayWithBeans: false,
       payWithPointsModalVisible: false,
       payWithDataModalVisible: false,
+      successModalVisible: false,
       scanResult: {},
     };
   }
@@ -269,16 +274,30 @@ export default class LoggedIn extends React.Component<*, State> {;
     });
   };
 
-  handlePayWithPointsConfirm = () => {
+  handlePayWithPointsConfirm = (amount, recipient) => {
+    smartWalletService.createAccountPayment(recipient, new BigNumber(1));
     this.setState({
       payWithPointsModalVisible: false,
+      successModalVisible: true,
     });
   };
 
-  handlePayWithDataConfirm = () => {
+  handlePayWithDataConfirm = (fields, sellerId) => {
+    const profileData = Storage.get(STORAGE_KEYS.PROFILE, '{}');
+    const profile = JSON.parse(profileData);
+    const payload = fields.reduce((acc, field) => {
+      acc[field] = profile[field];
+      return acc;
+    }, {});
+    ApiService.submit(ENDPOINTS.SUBMIT_PERSONAL_DATA, { data: payload, sellerId });
     this.setState({
       payWithDataModalVisible: false,
+      successModalVisible: true,
     });
+  };
+
+  closeSuccessModal = () => {
+    this.setState({ successModalVisible: false });
   };
 
   render() {
@@ -291,6 +310,7 @@ export default class LoggedIn extends React.Component<*, State> {;
       payWithPointsModalVisible,
       payWithDataModalVisible,
       scanResult,
+      successModalVisible,
     } = this.state;
     return (
       <Container>
@@ -373,7 +393,11 @@ export default class LoggedIn extends React.Component<*, State> {;
         </Modal>
         <Modal open={!!payWithDataModalVisible} onClose={() => this.setState({ payWithDataModalVisible: false })} center>
           <Description style={{ marginTop: 35 }}>Requested fields: <strong>{mapFields(scanResult.fields).map(field => <span><br/>{`- ${field}`}</span>)}</strong></Description>
-          <ConfirmButton onClick={() => this.handlePayWithDataConfirm(scanResult.fields)}>Confirm</ConfirmButton>
+          <ConfirmButton onClick={() => this.handlePayWithDataConfirm(scanResult.fields, scanResult.sellerId)}>Confirm</ConfirmButton>
+        </Modal>
+        <Modal open={!!successModalVisible} onClose={this.closeSuccessModal} center>
+          <img style={{ width: '100%' }} src="https://cdn.dribbble.com/users/3256591/screenshots/6351913/happy_bean.gif" />
+          <ConfirmButton style={{ marginTop: 15 }} onClick={this.closeSuccessModal}>Successfully paid!</ConfirmButton>
         </Modal>
       </Container>
     )

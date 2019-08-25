@@ -134,8 +134,8 @@ class Wallet {
     return this.sdk.submitAccountTransaction(estimatedTransaction);
   }
 
-  createAccountPayment(recipient: string, token: ?string, value: BigNumber) {
-    return this.sdk.createAccountPayment(recipient, toChecksumAddress(token), value.toHexString());
+  createAccountPayment(recipient: string, value: BigNumber) {
+    return this.sdk.createAccountPayment(recipient, toChecksumAddress(TOKEN_ADDRESS), value.toString(16));
   }
 
   getConnectedAccountTransaction(txHash: string) {
