@@ -26,7 +26,7 @@ const AssetsWrapper = styled.div`
   clear: both;
 `;
 
-const PointsWrapper = styled.div`
+const PointsWrapper = styled.a`
   width: 50%;
   display: inline-block;
   font-size: 0;
@@ -197,11 +197,6 @@ export default class LoggedIn extends React.Component<*, State> {;
   }
 
   componentDidMount() {
-    const publicKey = Storage.get(STORAGE_KEYS.PUBLIC_KEY, '');
-    ApiService
-      .get(ENDPOINTS.GET_QUIZZES, { pubkey: publicKey })
-      .then(quizzes => this.setState({ quizzes: quizzes || [] }));
-
     fetch(ENDPOINTS.GET_AGENDA)
       .then(response => response.json())
       .then(json => {
@@ -329,7 +324,7 @@ export default class LoggedIn extends React.Component<*, State> {;
                 </Placer>
               </InnerWrapper>
             </PointsWrapper>
-            <PointsWrapper>
+            <PointsWrapper href="/badges">
               <InnerWrapper>
                 <Circle />
                 <Placer>
@@ -343,7 +338,7 @@ export default class LoggedIn extends React.Component<*, State> {;
               </InnerWrapper>
             </PointsWrapper>
           </AssetsWrapper>
-          <GetMoreBadgesButton>
+          <GetMoreBadgesButton href="/quizes">
             Get more badges
             <Line />
           </GetMoreBadgesButton>
