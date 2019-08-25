@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import type { Quiz as QuizModel } from '../models/Quiz';
 import HeaderBlock from "../components/HeaderBlock";
 import { TopNav } from "../components/TopNav";
+import { Storage, STORAGE_KEYS } from "../services/storage";
 
 type State = {
   quizzes?: QuizModel[],
@@ -17,7 +18,7 @@ const CardsWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const QuizCard = styled.a`
+const BadgeCard = styled.a`
   width: 50%;
   text-decoration: none;
   text-align: center;
@@ -129,31 +130,41 @@ export default class Badges extends React.Component<*, State> {
     const firstBadge = badgesMockup[0];
     const threeOtherBadges = badgesMockup.slice(1, 4);
     const leftBadges = badgesMockup.slice(4, 8);
+    const publicKey = Storage.get(STORAGE_KEYS.PUBLIC_KEY, '');
     return (
       <Container>
         <HeaderBlock />
         <TopNav title="YOUR BADGES (3/8)" />
-        <QuizCard style={{ marginTop: 10 }}>
+        <BadgeCard
+          style={{ marginTop: 10 }}
+          href={`https://ropsten.etherscan.io/address/${publicKey}#tokentxnsErc721`}
+          target="_blank"
+        >
           <InnerWrapper>
             <BadgeWrapper>
               {!!firstBadge.iconName && <BadgeImage src={firstBadge.iconName} />}
             </BadgeWrapper>
             <Title>{firstBadge.name}</Title>
           </InnerWrapper>
-        </QuizCard>
+        </BadgeCard>
 
         <CardsWrapper>
           {threeOtherBadges.map((quiz, index) => {
             const { name, iconName } = quiz;
             return (
-              <QuizCard style={{ width: '33%' }}>
+              <BadgeCard
+                style={{ width: '33%' }}
+                href={`https://ropsten.etherscan.io/address/${publicKey}#tokentxnsErc721`}
+                target="_blank"
+                key={`${index}`}
+              >
                 <InnerWrapper>
                   <BadgeWrapper>
                     {!!iconName && <BadgeImage src={iconName} />}
                   </BadgeWrapper>
                   <Title>{name}</Title>
                 </InnerWrapper>
-              </QuizCard>)
+              </BadgeCard>)
           })}
         </CardsWrapper>
 
@@ -161,14 +172,19 @@ export default class Badges extends React.Component<*, State> {
           {leftBadges.map((quiz, index) => {
             const { name, iconName } = quiz;
             return (
-              <QuizCard style={{ width: '50%' }}>
+              <BadgeCard
+                style={{ width: '50%' }}
+                href={`https://ropsten.etherscan.io/address/${publicKey}#tokentxnsErc721`}
+                target="_blank"
+                key={`${index}`}
+              >
                 <InnerWrapper>
                   <BadgeWrapper>
                     {!!iconName && <BadgeImage src={iconName} />}
                   </BadgeWrapper>
                   <Title>{name}</Title>
                 </InnerWrapper>
-              </QuizCard>)
+              </BadgeCard>)
           })}
         </CardsWrapper>
         <Footer>

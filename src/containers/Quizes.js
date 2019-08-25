@@ -79,6 +79,7 @@ export default class Quizes extends React.Component<*, State> {
           {quizzes.map((quiz, index) => {
             const { name } = quiz;
             const iconName = name === 'pillar' ? pillaristaIcon : boxIcon;
+            const quizId = `quiz-${index}`;
              return (
               <QuizCard to={`/quizes/${name}`} key={quizId}>
                 <InnerWrapper>
