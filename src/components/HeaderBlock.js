@@ -19,9 +19,9 @@ const HeaderWrapper = styled.div`
 
 const Title = styled.h1`
   font-size: 1.5em;
-  text-align: center;
+  text-align: left;
   color: #000000;
-  margin: 0 40px;
+  margin-right: 40px;
 `;
 
 const MyProfileButton = styled.a`
@@ -54,8 +54,6 @@ const BeansImage = styled.img`
 
 type Props = {
   showExitButton?: boolean,
-  balance: string,
-  fetchBalance: Function,
 };
 
 class HeaderBlock extends React.Component<Props> {
@@ -70,7 +68,7 @@ class HeaderBlock extends React.Component<Props> {
       <HeaderWrapper>
         <MainLink href="/">
           <Title>
-            {this.props.balance || 0} <span style={{ color: '#ff00f2' }}>BEEN</span>
+            ETHBerlin
           </Title>
         </MainLink>
         {!this.props.showExitButton &&
@@ -83,7 +81,6 @@ class HeaderBlock extends React.Component<Props> {
           <img src={closeIcon}/>
         </ExitButton>
         }
-        <BeansImage src={beansImage}/>
       </HeaderWrapper>
     );
   }

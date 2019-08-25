@@ -12,6 +12,8 @@ import scanIcon from '../assets/images/scan.svg';
 import Modal from "react-responsive-modal";
 
 import smartWalletService from '../services/wallet';
+import {fetchBalanceAction} from "../actions/walletActions";
+import {connect} from "react-redux";
 
 const Container = styled.div`
   min-height: calc(100vh - 40px);
@@ -181,7 +183,7 @@ const mapFields = (fields = []) => {
     })
 };
 
-export default class LoggedIn extends React.Component<*, State> {;
+class LoggedIn extends React.Component<*, State> {;
 
   constructor(props){
     super(props);
@@ -199,6 +201,8 @@ export default class LoggedIn extends React.Component<*, State> {;
   }
 
   componentDidMount() {
+    const { fetchBalance } = this.props;
+    fetchBalance();
     fetch(ENDPOINTS.GET_AGENDA)
       .then(response => response.json())
       .then(json => {
@@ -318,7 +322,7 @@ export default class LoggedIn extends React.Component<*, State> {;
               <InnerWrapper>
                 <Placer>
                   <TopTitle style={{ color: '#0000FF' }}>
-                    20
+                    {this.props.balance || 0}
                   </TopTitle>
                   <Title>
                     BEANS
@@ -400,3 +404,15 @@ export default class LoggedIn extends React.Component<*, State> {;
     )
   }
 }
+
+const mapStateToProps = ({
+  wallet: { balance },
+}) => ({
+  balance,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchBalance: () => dispatch(fetchBalanceAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoggedIn);

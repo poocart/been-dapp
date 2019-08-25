@@ -50,6 +50,34 @@ const BadgeWrapper = styled.div`
   border: 2px solid black;
 `;
 
+const BlackButton = styled.button`
+  background: #000;
+  border: none;
+  padding: 15px;
+  color: #fff;
+  font-size: 16px;
+  margin-top: 20px;
+  align-self: center;
+  width: 200px;
+  &:disabled {
+    background: #909090;
+  }
+`;
+
+const SmallText = styled.p`
+  margin-top: 10px;
+  font-size: 14px;
+  width: 120px;
+  display: inline-block;
+`;
+
+const Footer = styled.div`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+
 const attendanceIcon = require('../assets/images/badge1.png');
 const boxIcon = require('../assets/images/badge2.png');
 const pillaristaIcon = require('../assets/images/badge3.png');
@@ -143,6 +171,10 @@ export default class Badges extends React.Component<*, State> {
               </QuizCard>)
           })}
         </CardsWrapper>
+        <Footer>
+          <BlackButton disabled>Transfer badges</BlackButton>
+          <SmallText>Save badges in your main wallet</SmallText>
+        </Footer>
       </Container>
     )
   }

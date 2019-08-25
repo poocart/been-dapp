@@ -48,27 +48,6 @@ const QRCodeImageWrapper = styled.div`
   text-align: center;
 `;
 
-const BlackButton = styled.button`
-  background: #000;
-  border: none;
-  padding: 15px;
-  color: #fff;
-  font-size: 16px;
-  margin-top: 20px;
-  align-self: center;
-  width: 200px;
-  &:disabled {
-    background: #909090;
-  }
-`;
-
-const SmallText = styled.p`
-  margin-top: 10px;
-  font-size: 14px;
-  width: 120px;
-  align-self: center;
-`;
-
 type State = {
   profile: Profile,
   qrCode?: string,
@@ -149,8 +128,6 @@ class ProfileContainer extends React.Component<*, State> {
             {this.renderProfileSetting('Email', 'email')}
             {this.renderProfileSetting('Telegram', 'telegram')}
           </ProfileSettings>
-          <BlackButton disabled>Transfer badges</BlackButton>
-          <SmallText>Save badges in your main wallet</SmallText>
         </ProfileWrapper>
       </div>
     )
