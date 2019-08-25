@@ -123,6 +123,8 @@ const GetMoreBadgesButton = styled.a`
   font-size: 16px;
   margin-top: 10px;
   position: relative;
+  text-decoration: none;
+  color: black;
 `;
 
 const Line = styled.div`
