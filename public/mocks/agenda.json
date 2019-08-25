@@ -1,39 +1,39 @@
 [
   {
     "id": "1",
-    "time-from": "11:00",
-    "time-to": "13:00",
+    "timeFrom": "11:00",
+    "timeTo": "13:00",
     "title": "Demo Time",
     "area": "3rd Floor",
     "isNow": true
   },
   {
     "id": "2",
-    "time-from": "13:00",
-    "time-to": "14:00",
+    "timeFrom": "13:00",
+    "timeTo": "14:00",
     "title": "Event title",
     "speaker": "John Doey",
     "area": "1st Floor"
   },
   {
     "id": "3",
-    "time-from": "13:00",
-    "time-to": "14:00",
+    "timeFrom": "13:00",
+    "timeTo": "14:00",
     "title": "Event title",
     "speaker": "John Doey",
     "area": "1st Floor"
   },
   {
     "id": "4",
-    "time-from": "13:00",
-    "time-to": "14:00",
+    "timeFrom": "13:00",
+    "timeTo": "14:00",
     "title": "Event title",
     "speaker": "John Doey",
     "area": "1st Floor"
   }, {
   "id": "5",
-  "time-from": "13:00",
-  "time-to": "14:00",
+  "timeFrom": "13:00",
+  "timeTo": "14:00",
   "title": "Event title",
   "speaker": "John Doey",
   "area": "1st Floor"

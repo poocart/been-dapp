@@ -79,7 +79,7 @@ export const Agenda = ({ agenda, showMore, style }) => {
             <AgendaItemWrapper key={event.id} href='/'>
               <InnerWrapper>
                 <InfoColumn>
-                  <SmallText>{event.timeFrom}</SmallText>-<SmallText>{event.timeTo}</SmallText>
+                  <SmallText>{`${event.timeFrom}-${event.timeTo}`}</SmallText>
                   <SmallText>{event.area}</SmallText>
                 </InfoColumn>
                 <TitleWrapper>

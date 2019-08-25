@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import type { Quiz as QuizModel } from '../models/Quiz';
 import HeaderBlock from "../components/HeaderBlock";
+import { TopNav } from "../components/TopNav";
 
 type State = {
   quizzes?: QuizModel[],
@@ -24,13 +25,6 @@ const QuizCard = styled.a`
 
 const InnerWrapper = styled.div`
   padding: 10px;
-`;
-
-const MainTitle = styled.h1`
-  font-size: 24px;
-  text-align: center;
-  margin-top: 10px;
-  color: black;
 `;
 
 const Title = styled.h2`
@@ -110,9 +104,7 @@ export default class Badges extends React.Component<*, State> {
     return (
       <Container>
         <HeaderBlock />
-        <MainTitle>
-          YOUR BADGES
-        </MainTitle>
+        <TopNav title="YOUR BADGES (3/8)" />
         <QuizCard style={{ marginTop: 10 }}>
           <InnerWrapper>
             <BadgeWrapper>

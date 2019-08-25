@@ -2,6 +2,8 @@ import React from 'react';
 import { Storage, STORAGE_KEYS } from '../services/storage';
 import HeaderBlock from '../components/HeaderBlock';
 import { Agenda } from '../components/Agenda';
+import { TopNav } from "../components/TopNav";
+import { ENDPOINTS } from "../services/api";
 
 type State = {
   redirectToReferrer: boolean,
@@ -16,7 +18,7 @@ class AgendaScreen extends React.Component<*, State> {
   componentDidMount() {
     if (!Storage.isStored(STORAGE_KEYS.PRIVATE_KEY)) this.props.history.push('/');
 
-    fetch('http://www.mocky.io/v2/5d618e563200005d008e6126')
+    fetch(ENDPOINTS.GET_AGENDA)
       .then(response => response.json())
       .then(json => {
         this.setState({ agenda: json })
@@ -29,7 +31,7 @@ class AgendaScreen extends React.Component<*, State> {
     return (
       <div>
         <HeaderBlock />
-        <p>Agenda</p>
+        <TopNav title="Agenda" />
         <Agenda agenda={agenda} />
       </div>
     )

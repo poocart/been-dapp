@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Quiz from '../components/Quiz';
+import { TopNav } from "../components/TopNav";
 import { ApiService, ENDPOINTS } from '../services/api';
 import type { Quiz as QuizModel } from '../models/Quiz';
 import {Storage, STORAGE_KEYS} from "../services/storage";
@@ -29,6 +29,7 @@ const InnerWrapper = styled.div`
   border: 2px solid black;
   margin: 5px;
   padding: 20px;
+  text-align: center;
 `;
 
 const Title = styled.h2`
@@ -37,6 +38,17 @@ const Title = styled.h2`
   margin-top: 15px;
   color: black;
 `;
+
+const BadgeImage = styled.img`
+  width: 70px;
+  height: 70px;
+  display: inline-block;
+  border-radius: 35px;
+  padding: 3px;
+`;
+
+const boxIcon = require('../assets/images/badge2.png');
+const pillaristaIcon = require('../assets/images/badge3.png');
 
 export default class Quizes extends React.Component<*, State> {
   constructor(props){
@@ -50,7 +62,10 @@ export default class Quizes extends React.Component<*, State> {
     const publicKey = Storage.get(STORAGE_KEYS.PUBLIC_KEY, '');
     ApiService
       .get(ENDPOINTS.GET_QUIZZES, { pubkey: publicKey })
-      .then(quizzes => this.setState({ quizzes: quizzes || [] }));
+      .then(quizzes => {
+        const filterredQuizes = quizzes.length ? quizzes.filter(({ name }) => name !== 'ethberlin') : [];
+        this.setState({ quizzes: filterredQuizes })
+      });
   }
 
   render() {
@@ -58,13 +73,16 @@ export default class Quizes extends React.Component<*, State> {
     return (
       <Container>
         <HeaderBlock />
+        <TopNav title="Quizes" />
         <CardsWrapper>
           {quizzes.map((quiz, index) => {
             const { name } = quiz;
             const quizId = `quiz-${index}`;
-            return (
+            const iconName = name === 'pillar' ? pillaristaIcon : boxIcon;
+             return (
               <QuizCard href={`/quizes/${name}`}>
                 <InnerWrapper>
+                  <BadgeImage src={iconName} />
                   <Title>{name}</Title>
                 </InnerWrapper>
               </QuizCard>)

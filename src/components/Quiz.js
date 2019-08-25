@@ -35,8 +35,9 @@ class Quiz extends React.Component<Prop, State> {
   state = {};
 
   onSubmitClick = () => {
-    const { name } = this.props;
+    const { name, onSubmit } = this.props;
     const { answers } = this.state;
+    if (onSubmit) onSubmit();
     if (!answers) return;
     const sequence = Object.values(answers).join('');
     const publicKey = Storage.get(STORAGE_KEYS.PUBLIC_KEY, '');
@@ -62,7 +63,6 @@ class Quiz extends React.Component<Prop, State> {
     const { name, questions, quizId } = this.props;
     return (
       <div>
-        <h1 style={{ marginBottom: 14, marginTop: 10 }}>{name}</h1>
         {questions.map(({question, answers}, questionIndex) => {
           const questionId = `${quizId}-question-${questionIndex}`;
           return (
