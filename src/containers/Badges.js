@@ -154,7 +154,7 @@ export default class Badges extends React.Component<*, State> {
             return (
               <BadgeCard
                 style={{ width: '33%' }}
-                href={`https://ropsten.etherscan.io/address/${publicKey}#tokentxnsErc721`}
+                href={!!iconName ? `https://ropsten.etherscan.io/address/${publicKey}#tokentxnsErc721` : null}
                 target="_blank"
                 key={`${index}`}
               >
@@ -174,7 +174,7 @@ export default class Badges extends React.Component<*, State> {
             return (
               <BadgeCard
                 style={{ width: '50%' }}
-                href={`https://ropsten.etherscan.io/address/${publicKey}#tokentxnsErc721`}
+                href={!!iconName ? `https://ropsten.etherscan.io/address/${publicKey}#tokentxnsErc721` : null}
                 target="_blank"
                 key={`${index}`}
               >
