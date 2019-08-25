@@ -5,6 +5,9 @@ import { connect, Provider } from 'react-redux';
 import LoggedIn from './LoggedIn';
 import Home from './Home';
 import AgendaScreen from './Agenda';
+import Quizes from './Quizes';
+import Quiz from './Quiz';
+import Badges from './Badges';
 import {
   BrowserRouter as Router,
   Switch,
@@ -121,6 +124,9 @@ class App extends React.Component<{}, State> {
               <PrivateRoute exact path='/' component={LoggedIn} />
               <PrivateRoute exact path='/profile' component={Profile} />
               <PrivateRoute exact path='/agenda' component={AgendaScreen} />
+              <PrivateRoute exact path='/quizes' component={Quizes} />
+              <PrivateRoute exact path='/quizes/:quizName' component={Quiz} />
+              <PrivateRoute exact path='/badges' component={Badges} />
               <Route path="/:pk" component={Home} />
             </Switch>
           </Router>
