@@ -76,7 +76,7 @@ export const Agenda = ({ agenda, showMore, style }) => {
       <AgendaWrapper>
         {agenda.map((event) => {
           return (
-            <AgendaItemWrapper key={event.id} href='/'>
+            <AgendaItemWrapper key={event.id}>
               <InnerWrapper>
                 <InfoColumn>
                   <SmallText>{`${event.timeFrom}-${event.timeTo}`}</SmallText>
