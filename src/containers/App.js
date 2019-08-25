@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { createGlobalStyle, keyframes } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import { connect, Provider } from 'react-redux';
 
 import LoggedIn from './LoggedIn';
@@ -40,31 +40,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-`;
-
-const Square = styled.div`
-  display: inline-block;
-  width: 60vw;
-  height: 60vw;
-  border: 4px solid black;
-  animation: ${rotate} 3s linear infinite;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -30vw;
-  margin-left: -30vw;
-  z-index: 2;
-`;
-
-
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route exact {...rest} render={(props) => {
     return (
@@ -77,25 +52,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     )
   }} />
 );
-
-const LoadingWrapper = styled.div`
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-`;
-
-const LoadingText = styled.p`
-  margin-bottom: 25px;
-  font-size: 26px;
-  font-weight: 700;
-`;
 
 type State = {
   needToInitialize: boolean,
@@ -126,13 +82,7 @@ class App extends React.Component<{}, State> {
     return (
       <div>
         <GlobalStyle />
-        {!isSdkInitialized && needToInitialize && (
-          <LoadingWrapper>
-            <LoadingText>Loading...</LoadingText>
-            <img src={randomLoadingGif()} />
-            <Square />
-          </LoadingWrapper>
-        )}
+        {!isSdkInitialized && needToInitialize && (<Loading />)}
         {(isSdkInitialized || !needToInitialize) && (
           <Router>
             <Switch>

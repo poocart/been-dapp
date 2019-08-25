@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const LoadingWrapper = styled.div`
   position: fixed;
@@ -20,6 +20,32 @@ const LoadingText = styled.p`
   font-weight: 700;
 `;
 
+
+const rotate = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+`;
+
+const Square = styled.div`
+  display: inline-block;
+  width: 60vw;
+  height: 60vw;
+  border: 4px solid black;
+  animation: ${rotate} 3s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -30vw;
+  margin-left: -30vw;
+  z-index: 2;
+`;
+
+
 const loadingGifs = [
   'https://media.giphy.com/media/s05af72MALT9K/giphy.gif',
   'https://media.giphy.com/media/4KLv24CPUoZ0I/giphy.gif',
@@ -37,6 +63,7 @@ const Loading = () => (
   <LoadingWrapper>
     <LoadingText>Loading...</LoadingText>
     <img src={randomLoadingGif()} />
+    <Square />
   </LoadingWrapper>
 );
 
