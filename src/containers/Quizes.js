@@ -80,7 +80,7 @@ export default class Quizes extends React.Component<*, State> {
             const quizId = `quiz-${index}`;
             const iconName = name === 'pillar' ? pillaristaIcon : boxIcon;
              return (
-              <QuizCard href={`/quizes/${name}`}>
+              <QuizCard href={`/quizes/${name}`} key={quizId}>
                 <InnerWrapper>
                   <BadgeImage src={iconName} />
                   <Title>{name}</Title>
