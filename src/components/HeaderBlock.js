@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
+import Loading from '../components/Loading';
 import { Storage, STORAGE_KEYS } from '../services/storage';
 
 import myProfileIcon from '../assets/images/profile.svg';
@@ -64,8 +65,7 @@ class HeaderBlock extends React.Component<Props> {
 
   render() {
     const existingPk = Storage.get(STORAGE_KEYS.PRIVATE_KEY);
-    if (!existingPk) return <p>Not logged in</p>;
-    console.log(this.props.location);
+    if (!existingPk) return <Loading />;
     return (
       <HeaderWrapper>
         <MainLink href="/">
