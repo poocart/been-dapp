@@ -8,7 +8,7 @@
     "@netgum/utils": "^0.1.3",
     "bignumber.js": "^9.0.0",
     "ethers": "^4.0.36",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "lodash.get": "^4.4.2",
     "qrcode": "^1.4.1",
     "react": "^16.9.0",
